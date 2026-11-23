@@ -1,5 +1,5 @@
 {
-  "name": "svs-enterprises",
+  "name": "ask-gmb-solution",
   "private": true,
   "version": "0.0.0",
   "type": "module",
@@ -10,12 +10,12 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tailwindcss/vite": "^4.3.5",
     "framer-motion": "^14.14.0",
-    "lucide-react": "^1.76.0",
+    "gsap": "^3.15.1",
+    "lucide-react": "^1.75.0",
     "react": "^19.3.1",
     "react-dom": "^19.3.1",
-    "tailwindcss": "^4.3.5"
+    "react-router-dom": "^7.18.5"
   },
   "devDependencies": {
     "@eslint/js": "^10.0.1",
