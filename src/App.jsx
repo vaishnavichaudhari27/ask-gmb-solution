@@ -1,14 +1,18 @@
 import { useEffect, useRef, useState } from 'react'
-import { motion, useReducedMotion } from 'framer-motion'
+import { motion, useReducedMotion, AnimatePresence } from 'framer-motion'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
   ArrowRight,
   ArrowUpRight,
   BarChart3,
+  BookOpen,
   Building2,
   Calendar,
   Check,
   CheckCircle2,
   ChevronDown,
+  ChevronRight,
   Code2,
   Eye,
   Globe2,
@@ -35,8 +39,18 @@ import {
   Target,
   TrendingUp,
   Users,
+  User,
+  Home,
+  MessageSquare,
   Wrench,
   X,
+  Gauge,
+  Laptop,
+  Megaphone,
+  Link2,
+  Settings,
+  Send,
+  FileText,
 } from 'lucide-react'
 import {
   BrowserRouter,
@@ -48,8 +62,28 @@ import {
   useLocation,
 } from 'react-router-dom'
 import { usePremiumMotion } from './usePremiumMotion.js'
-import logo from './assets/ask-gmb-logo-user.png'
+import { InteractiveCard3D, AnimatedCounter, ScrollProgressBar } from './InteractiveComponents.jsx'
+import logo from './assets/ask-gmb-logo-navbar.png'
+import blogHeroStage from './assets/blog-hero-3d-stage.jpg'
+import blogCard1 from './assets/blog-icons/blog-card-3d-1.png'
+import blogCard2 from './assets/blog-icons/blog-card-3d-2.png'
+import blogCard3 from './assets/blog-icons/blog-card-3d-3.png'
+import blogCard4 from './assets/blog-icons/blog-card-3d-4.png'
+import blogCard5 from './assets/blog-icons/blog-card-3d-5.png'
+import blogCard6 from './assets/blog-icons/blog-card-3d-6.png'
+import blogCard7 from './assets/blog-icons/blog-card-3d-7.png'
+import blogCard8 from './assets/blog-icons/blog-card-3d-8.png'
+import blogCard9 from './assets/blog-icons/blog-card-3d-9.png'
+import blogCard10 from './assets/blog-icons/blog-card-3d-10.png'
+import blogCard11 from './assets/blog-icons/blog-card-3d-11.png'
+import blogCard12 from './assets/blog-icons/blog-card-3d-12.png'
 import aboutTeamImage from './assets/ask-gmb-team-collaboration.jpg'
+import aboutHero3dStage from './assets/about-hero-3d-stage.jpg'
+import aboutMission3d from './assets/about-mission-3d.png'
+import aboutVision3d from './assets/about-vision-3d.png'
+import aboutValues3d from './assets/about-values-3d.png'
+
+gsap.registerPlugin(ScrollTrigger)
 import growthBuildingImage from './assets/ask-gmb-growth-building.jpg'
 import homepageHeroImage from './assets/ask-gmb-homepage-hero.png'
 import industriesDoctorImage from './assets/ask-gmb-industries-doctor.png'
@@ -59,6 +93,82 @@ import laptopGrowthImage from './assets/ask-gmb-laptop-growth.jpg'
 import officeReceptionImage from './assets/ask-gmb-office-reception.jpg'
 import processPlantImage from './assets/ask-gmb-process-plant.jpg'
 import servicesHeroImage from './assets/ask-gmb-services-hero.png'
+import iconSubMaps from './assets/icon-sub-maps.png'
+import iconSubGbp from './assets/icon-sub-gbp.png'
+import iconSubCalls from './assets/icon-sub-calls.png'
+import iconSubReviews from './assets/icon-sub-reviews.png'
+import iconSubLaptop from './assets/icon-sub-laptop.png'
+import iconSubPhone from './assets/icon-sub-phone.png'
+import iconSubShield from './assets/icon-sub-shield.png'
+import iconSubSpeed from './assets/icon-sub-speed.png'
+import buildingVisualCenter from './assets/about-3d-building-center.png'
+import stat3dCalendar from './assets/stat-3d-calendar.png'
+import stat3dUsers from './assets/stat-3d-users.png'
+import stat3dLaptop from './assets/stat-3d-laptop.png'
+import stat3dStar from './assets/stat-3d-star.png'
+import servicesHeroLaptop from './assets/services-hero-laptop.jpg'
+import servicesHeroRocket from './assets/services-hero-rocket.jpg'
+import servicesHeroBanner from './assets/services-hero-banner.jpg'
+import serviceIcon1 from './assets/service-icon-3d-1.png'
+import serviceIcon2 from './assets/service-icon-3d-2.png'
+import serviceIcon3 from './assets/service-icon-3d-3.png'
+import serviceIcon4 from './assets/service-icon-3d-4.png'
+import serviceIcon5 from './assets/service-icon-3d-5.png'
+import serviceIcon6 from './assets/service-icon-3d-6.png'
+import serviceGrid1 from './assets/services-icons/service-grid-1.png'
+import serviceGrid2 from './assets/services-icons/service-grid-2.png'
+import serviceGrid3 from './assets/services-icons/service-grid-3.png'
+import serviceGrid4 from './assets/services-icons/service-grid-4.png'
+import serviceGrid5 from './assets/services-icons/service-grid-5.png'
+import serviceGrid6 from './assets/services-icons/service-grid-6.png'
+import serviceGrid7 from './assets/services-icons/service-grid-7.png'
+import serviceGrid8 from './assets/services-icons/service-grid-8.png'
+import serviceGrid9 from './assets/services-icons/service-grid-9.png'
+import serviceGrid10 from './assets/services-icons/service-grid-10.png'
+import serviceGrid11 from './assets/services-icons/service-grid-11.png'
+import serviceGrid12 from './assets/services-icons/service-grid-12.png'
+import whyIcon1 from './assets/why-icon-3d-1.png'
+import whyIcon2 from './assets/why-icon-3d-2.png'
+import whyIcon3 from './assets/why-icon-3d-3.png'
+import whyIcon4 from './assets/why-icon-3d-4.png'
+import whyIcon5 from './assets/why-icon-3d-5.png'
+import whyIcon6 from './assets/why-icon-3d-6.png'
+import industriesBuildingHeader from './assets/industries-building-header.jpg'
+import industriesDoctorCard from './assets/industries-doctor-card.jpg'
+import industriesStorefrontCard from './assets/industries-storefront-card.jpg'
+import cta3dRocket from './assets/cta-3d-rocket.jpg'
+import cta3dLaptop from './assets/cta-3d-laptop.jpg'
+import faq3dBubble from './assets/faq-3d-bubble.jpg'
+import faqIcon1 from './assets/faq-icon-1.png'
+import faqIcon2 from './assets/faq-icon-2.png'
+import faqIcon3 from './assets/faq-icon-3.png'
+import faqIcon4 from './assets/faq-icon-4.png'
+import faqIcon5 from './assets/faq-icon-5.png'
+import contact3dLaptop from './assets/contact-3d-laptop.jpg'
+import contactHeroLaptop from './assets/contact-hero-3d-laptop-v2.jpg'
+import contactFuturisticBg from './assets/contact-futuristic-bg.png'
+import contactCardCall from './assets/contact-cards/contact-card-call.png'
+import contactCardWhatsapp from './assets/contact-cards/contact-card-whatsapp.png'
+import contactCardEmail from './assets/contact-cards/contact-card-email.png'
+import contactCardInstagram from './assets/contact-cards/contact-card-instagram.png'
+import contactCardFacebook from './assets/contact-cards/contact-card-facebook.png'
+import contactCardLinkedin from './assets/contact-cards/contact-card-linkedin.png'
+import footer3dChart from './assets/footer-3d-chart.png'
+import footer3dMap from './assets/footer-3d-map.png'
+import howWeWorkHero from './assets/how-we-work-pedestal-hero.png'
+import processHero3d from './assets/process-hero-3d.jpg'
+import processCard1 from './assets/process-icons/card-1.png'
+import processCard2 from './assets/process-icons/card-2.png'
+import processCard3 from './assets/process-icons/card-3.png'
+import processCard4 from './assets/process-icons/card-4.png'
+import processStepIcon1 from './assets/process-icons/step-01.png'
+import processStepIcon2 from './assets/process-icons/step-02.png'
+import processStepIcon3 from './assets/process-icons/step-03.png'
+import processStepIcon4 from './assets/process-icons/step-04.png'
+import iconProcessSeo from './assets/icon-3d-seo.png'
+import iconProcessTarget from './assets/icon-3d-target.png'
+import iconProcessLayers from './assets/icon-3d-layers.png'
+import iconProcessChartGold from './assets/icon-3d-chart-gold.png'
 import siteConfig from './siteConfig.js'
 import './App.css'
 import './reference-design.css'
@@ -631,17 +741,6 @@ const articles = [
       ['Measure meaningful outcomes', 'Use appropriate analytics to understand visits and enquiries. Search positions change, so avoid guarantees and focus on ongoing improvement.'],
     ],
   },
-  {
-    slug: 'online-business-visibility',
-    category: 'Digital Marketing',
-    title: 'Building online visibility for your business',
-    summary: 'Bring your website, business profiles, and customer communication together into a consistent presence.',
-    sections: [
-      ['Start with accurate information', 'Align your core business description, contact details, and service information across the places customers find you.'],
-      ['Use channels with purpose', 'Choose marketing channels based on your audience and goals. Keep messages consistent and direct visitors to useful next steps.'],
-      ['Learn and adjust', 'Review customer questions and campaign outcomes. Use what you learn to improve content and service information over time.'],
-    ],
-  },
 ]
 
 // 14. SOCIAL MEDIA ICONS (OFFICIAL BRAND COLORS)
@@ -762,7 +861,7 @@ function ScheduleCallButton({ className = '', variant = 'primary' }) {
       <button
         aria-expanded={isOpen}
         aria-haspopup="dialog"
-        className={`button button-schedule button-${variant}`}
+        className={`button button-schedule button-${variant} btn-tactile`}
         onClick={() => setIsOpen((prev) => !prev)}
         type="button"
       >
@@ -862,31 +961,6 @@ function Header() {
 
   return (
     <>
-    <div className="top-contact-bar">
-      <div className="top-contact-inner page-container">
-        <a
-          aria-label="View ASK GMB Solution office location on Google Maps"
-          className="top-contact-address"
-          href={siteConfig.mapsUrl}
-          rel="noopener noreferrer"
-          target="_blank"
-        >
-          <MapPin aria-hidden="true" size={15} />
-          <span>{siteConfig.address}</span>
-        </a>
-        <div className="top-contact-details">
-          <a href={`tel:${siteConfig.phone}`}>
-            <PhoneCall aria-hidden="true" size={14} />
-            <span>Call: {siteConfig.displayPhone}</span>
-          </a>
-          <span aria-hidden="true" className="top-contact-separator">•</span>
-          <a href={`mailto:${siteConfig.email}`}>
-            <Mail aria-hidden="true" size={15} />
-            <span>{siteConfig.email}</span>
-          </a>
-        </div>
-      </div>
-    </div>
     <header className={`site-header ${isScrolled ? 'is-scrolled' : ''}`}>
       <nav aria-label="Main navigation" className="navigation page-container">
         <Link aria-label={`${siteConfig.companyName} home`} className="brand" to="/">
@@ -1225,7 +1299,7 @@ function TrustSection() {
             <div className="reference-stat" key={label}>
               <span className="reference-stat-icon"><Icon aria-hidden="true" size={38} /></span>
               <span className="reference-stat-copy">
-                <strong>{value}</strong>
+                <AnimatedCounter value={value} />
                 <span>{label}</span>
               </span>
             </div>
@@ -1238,51 +1312,222 @@ function TrustSection() {
 
 // 3. HERO SECTION - INTERACTIVE 3D DASHBOARD COMPOSITION
 function HeroDashboardComposition() {
+  const containerRef = useRef(null)
+  const [isTouch, setIsTouch] = useState(false)
+
+  useEffect(() => {
+    setIsTouch('ontouchstart' in window || navigator.maxTouchPoints > 0 || window.innerWidth < 768)
+  }, [])
+
   return (
-    <div aria-label="Digital growth and technology services" className="reference-hero-visual">
-      <img
+    <div
+      aria-label="Digital growth and technology services"
+      className="reference-hero-visual"
+      ref={containerRef}
+      style={{ perspective: 1200 }}
+    >
+      <motion.img
         alt="Digital growth dashboard with Google Business Profile management, local SEO, website development and growth services"
         className="reference-hero-laptop"
         fetchPriority="high"
         src={homepageHeroImage}
+        animate={
+          isTouch
+            ? {}
+            : {
+                y: [0, -12, 0],
+              }
+        }
+        transition={
+          isTouch
+            ? {}
+            : {
+                duration: 5.5,
+                repeat: Infinity,
+                ease: 'easeInOut',
+              }
+        }
+        whileHover={
+          isTouch
+            ? {}
+            : {
+                scale: 1.025,
+                transition: { duration: 0.35, ease: 'easeOut' },
+              }
+        }
       />
     </div>
   )
 }
 
 // 9. WORK PROCESS SECTION
-function ProcessSection() {
+function ProcessSection({ isPage = false }) {
+  const shouldReduceMotion = useReducedMotion()
+  const sectionRef = useRef(null)
+
+  const steps = [
+    {
+      num: '01',
+      title: 'Understand',
+      desc: 'Learn about your business, goals and audience.',
+      cardImg: processCard1,
+      accent: 'blue',
+    },
+    {
+      num: '02',
+      title: 'Plan',
+      desc: 'Create a customized digital strategy and roadmap.',
+      cardImg: processCard2,
+      accent: 'purple',
+    },
+    {
+      num: '03',
+      title: 'Execute',
+      desc: 'Implement the strategy with expertise.',
+      cardImg: processCard3,
+      accent: 'cyan',
+    },
+    {
+      num: '04',
+      title: 'Track & Grow',
+      desc: 'Monitor performance, optimize and scale continuously.',
+      cardImg: processCard4,
+      accent: 'green',
+    },
+  ]
+
+  useEffect(() => {
+    if (shouldReduceMotion || !sectionRef.current) return
+    const ctx = gsap.context(() => {
+      gsap.from('.proc-ref-card-wrapper', {
+        y: 32,
+        opacity: 0,
+        duration: 0.7,
+        stagger: 0.12,
+        ease: 'power3.out',
+        clearProps: 'transform,opacity',
+        scrollTrigger: {
+          trigger: '.proc-ref-grid',
+          start: 'top 85%',
+          once: true,
+        },
+      })
+    }, sectionRef)
+    return () => ctx.revert()
+  }, [shouldReduceMotion])
+
+  const HeadingTag = isPage ? 'h1' : 'h2'
+
   return (
-    <section className="reference-home-process">
-      <div className="page-container">
-        <div className="reference-process-intro">
-          <div className="reference-process-copy">
-            <span className="reference-eyebrow">OUR PROCESS</span>
-            <h2>How We Work</h2>
-            <p>A simple, proven process to grow your online presence and get better results.</p>
-            <Link className="reference-button reference-button-primary" to="/our-process">
-              Learn More About Our Process <ArrowRight aria-hidden="true" size={18} />
-            </Link>
+    <section className={`proc-ref-section${isPage ? ' proc-ref-section-page' : ''}`} ref={sectionRef}>
+      {/* Soft sky-blue decorative waves & ambient glow */}
+      <div className="proc-ref-bg-glow" aria-hidden="true" />
+      <svg aria-hidden="true" className="proc-ref-bottom-wave" preserveAspectRatio="none" viewBox="0 0 1440 160">
+        <path
+          d="M0 95 C 320 155, 680 35, 1060 95 C 1250 125, 1370 110, 1440 85 L1440 160 L0 160 Z"
+          fill="url(#procWaveGrad1)"
+          opacity="0.75"
+        />
+        <path
+          d="M0 120 C 380 65, 820 155, 1440 100 L1440 160 L0 160 Z"
+          fill="url(#procWaveGrad2)"
+          opacity="0.6"
+        />
+        <defs>
+          <linearGradient id="procWaveGrad1" x1="0%" x2="100%" y1="0%" y2="0%">
+            <stop offset="0%" stopColor="#0f62fe" stopOpacity="0.25" />
+            <stop offset="50%" stopColor="#38bdf8" stopOpacity="0.28" />
+            <stop offset="100%" stopColor="#0ea5e9" stopOpacity="0.32" />
+          </linearGradient>
+          <linearGradient id="procWaveGrad2" x1="0%" x2="100%" y1="0%" y2="0%">
+            <stop offset="0%" stopColor="#38bdf8" stopOpacity="0.4" />
+            <stop offset="100%" stopColor="#2563eb" stopOpacity="0.25" />
+          </linearGradient>
+        </defs>
+      </svg>
+
+      <div className="page-container proc-ref-container">
+        {/* Top Header Row: Left copy + Right blended 3D illustration */}
+        <div className="proc-ref-hero-row">
+          <div className="proc-ref-hero-copy">
+            <div className="proc-ref-breadcrumb-pill">
+              <Home size={13} className="proc-ref-bc-home" />
+              <Link to="/">Home</Link>
+              <span className="proc-ref-bc-sep">&gt;</span>
+              <span className="proc-ref-bc-curr">Our Process</span>
+            </div>
+
+            <HeadingTag className="proc-ref-title">
+              Our{' '}
+              <span className="proc-ref-title-accent">
+                Process
+                <svg aria-hidden="true" className="proc-ref-title-underline" fill="none" viewBox="0 0 220 16">
+                  <path d="M4 11 C 55 3, 155 3, 216 11" stroke="url(#procTitleGrad)" strokeLinecap="round" strokeWidth="4.5" />
+                  <defs>
+                    <linearGradient id="procTitleGrad" x1="4" x2="216" y1="11" y2="11">
+                      <stop stopColor="#0f62fe" />
+                      <stop offset="1" stopColor="#00c6ff" />
+                    </linearGradient>
+                  </defs>
+                </svg>
+              </span>
+            </HeadingTag>
+
+            <div className="proc-ref-sub-wrap">
+              <span className="proc-ref-sub-bar" />
+              <p className="proc-ref-subtitle">
+                A clear, structured and result-oriented approach to<br className="proc-sub-desktop-br" />
+                grow your business online.
+              </p>
+            </div>
           </div>
-          <div className="reference-process-visual">
-            <img alt="Laptop displaying local search analytics and business growth" loading="lazy" src={laptopGrowthImage} />
-            <img alt="" className="reference-process-plant" loading="lazy" src={processPlantImage} />
+
+          <div className="proc-ref-hero-visual">
+            <img
+              alt="Digital growth laptop with Google Business Profile, Maps, reviews and rocket"
+              className="proc-ref-hero-img"
+              loading={isPage ? 'eager' : 'lazy'}
+              src={processHero3d}
+            />
           </div>
         </div>
-        <div className="reference-process-cards">
-          {processSteps.map(({ step, title, desc, icon: Icon }, index) => (
-            <div className="reference-process-item" key={step}>
-              <article className="reference-process-card">
-                <span className="reference-process-icon"><Icon aria-hidden="true" size={30} /></span>
-                <span className="reference-process-number">{step}</span>
-                <h3>{title}</h3>
-                <p>{desc}</p>
+
+        {/* 4 Separate 3D Glassmorphism Cards with Dotted Connectors */}
+        <div className="proc-ref-grid">
+          {steps.map((step, idx) => (
+            <div className="proc-ref-card-wrapper" key={step.num}>
+              <article className={`proc-ref-card proc-ref-card-${step.accent}`}>
+                <img
+                  src={step.cardImg}
+                  alt={`${step.num} ${step.title}: ${step.desc}`}
+                  className="proc-ref-card-img"
+                  loading="lazy"
+                />
+                <span className="sr-only">
+                  <strong>{step.num} {step.title}</strong>: {step.desc}
+                </span>
               </article>
-              {index < processSteps.length - 1 && (
-                <ArrowRight aria-hidden="true" className="reference-process-arrow" size={24} />
+              {idx < steps.length - 1 && (
+                <div className="proc-ref-arc-connector" aria-hidden="true">
+                  <svg viewBox="0 0 70 30" className="proc-arc-svg" fill="none">
+                    <path d="M 0 18 Q 35 -6 70 18" stroke="#00b4d8" strokeWidth="2.5" strokeDasharray="3 4" strokeLinecap="round" />
+                  </svg>
+                  <span className="proc-ref-arc-dot" />
+                </div>
               )}
             </div>
           ))}
+        </div>
+
+        {/* Bottom CTA */}
+        <div className="proc-ref-cta-wrap">
+          <Link className="proc-ref-cta-btn" to="/contact">
+            <Calendar aria-hidden="true" size={18} />
+            <span>Schedule a Consultation</span>
+            <span className="proc-ref-cta-arrow" aria-hidden="true">
+              <ChevronRight size={16} />
+            </span>
+          </Link>
         </div>
       </div>
     </section>
@@ -1293,82 +1538,222 @@ function ServiceCategories() {
   return (
     <section aria-label="Our main service areas" className="reference-category-section">
       <div className="page-container reference-category-grid">
-        <Link className="reference-category-card reference-category-growth" to="/google-business-profile">
-          <span className="reference-category-icon"><BarChart3 aria-hidden="true" size={46} /></span>
-          <div className="reference-category-copy">
-            <h2>Digital Growth</h2>
-            <p>Be found, get more patients and grow your business.</p>
+        <div className="reference-category-card reference-category-growth">
+          <div className="reference-category-main">
+            <span className="reference-category-icon"><BarChart3 aria-hidden="true" size={42} /></span>
+            <div className="reference-category-copy">
+              <h2>Digital Growth</h2>
+              <p>Be found, get more patients and grow your business.</p>
+            </div>
+            <Link aria-label="Explore Digital Growth" className="reference-category-arrow" to="/google-business-profile">
+              <ArrowRight size={20} />
+            </Link>
           </div>
-          <span aria-hidden="true" className="reference-category-arrow"><ArrowRight size={22} /></span>
-        </Link>
-        <Link className="reference-category-card reference-category-technology" to="/website-design-development">
-          <span className="reference-category-icon"><Code2 aria-hidden="true" size={46} /></span>
-          <div className="reference-category-copy">
-            <h2>Technology Solutions</h2>
-            <p>Build, manage and scale your digital presence.</p>
+          <div className="reference-category-substrip">
+            <Link className="reference-substrip-item" to="/google-maps-ranking">
+              <span className="substrip-icon icon-maps"><img src={iconSubMaps} alt="Google Maps Ranking" className="substrip-img" /></span>
+              <span>Google Maps<br />Ranking</span>
+            </Link>
+            <Link className="reference-substrip-item" to="/google-business-profile">
+              <span className="substrip-icon icon-gbp"><img src={iconSubGbp} alt="GBP Optimization" className="substrip-img" /></span>
+              <span>GBP<br />Optimization</span>
+            </Link>
+            <Link className="reference-substrip-item" to="/contact">
+              <span className="substrip-icon icon-calls"><img src={iconSubCalls} alt="More Patient Calls" className="substrip-img" /></span>
+              <span>More<br />Patient Calls</span>
+            </Link>
+            <Link className="reference-substrip-item" to="/google-reviews-management">
+              <span className="substrip-icon icon-reviews"><img src={iconSubReviews} alt="Reviews Management" className="substrip-img" /></span>
+              <span>Reviews<br />Management</span>
+            </Link>
           </div>
-          <span aria-hidden="true" className="reference-category-arrow"><ArrowRight size={22} /></span>
-        </Link>
+        </div>
+
+        <div className="reference-category-card reference-category-technology">
+          <div className="reference-category-main">
+            <span className="reference-category-icon"><Code2 aria-hidden="true" size={42} /></span>
+            <div className="reference-category-copy">
+              <h2>Technology Solutions</h2>
+              <p>Build, manage and scale your digital presence.</p>
+            </div>
+            <Link aria-label="Explore Technology Solutions" className="reference-category-arrow" to="/website-design-development">
+              <ArrowRight size={20} />
+            </Link>
+          </div>
+          <div className="reference-category-substrip">
+            <Link className="reference-substrip-item" to="/website-design-development">
+              <span className="substrip-icon icon-tech"><img src={iconSubLaptop} alt="Website Development" className="substrip-img" /></span>
+              <span>Website<br />Development</span>
+            </Link>
+            <Link className="reference-substrip-item" to="/mobile-app-development">
+              <span className="substrip-icon icon-tech"><img src={iconSubPhone} alt="App Development" className="substrip-img" /></span>
+              <span>App<br />Development</span>
+            </Link>
+            <Link className="reference-substrip-item" to="/website-maintenance-hosting">
+              <span className="substrip-icon icon-tech"><img src={iconSubShield} alt="Secure & Reliable" className="substrip-img" /></span>
+              <span>Secure &amp;<br />Reliable</span>
+            </Link>
+            <Link className="reference-substrip-item" to="/react-development">
+              <span className="substrip-icon icon-tech"><img src={iconSubSpeed} alt="High Performance" className="substrip-img" /></span>
+              <span>High<br />Performance</span>
+            </Link>
+          </div>
+        </div>
       </div>
     </section>
   )
 }
 
+const sixServiceItems = [
+  {
+    path: '/google-business-profile',
+    title: 'Google Business Profile Management',
+    desc: 'Optimize, manage and grow your GBP presence.',
+    img: serviceIcon1,
+    waveClass: 'wave-blue'
+  },
+  {
+    path: '/local-seo',
+    title: 'Google Maps Ranking Improvement',
+    desc: 'Improve local visibility on Google Maps.',
+    img: serviceIcon2,
+    waveClass: 'wave-purple'
+  },
+  {
+    path: '/local-seo',
+    title: 'Local SEO Services',
+    desc: 'Get found by local customers and increase enquiries.',
+    img: serviceIcon3,
+    waveClass: 'wave-cyan'
+  },
+  {
+    path: '/search-engine-optimization',
+    title: 'Search Engine Optimization (SEO)',
+    desc: 'Improve search rankings and increase organic traffic.',
+    img: serviceIcon4,
+    waveClass: 'wave-gold'
+  },
+  {
+    path: '/google-reviews-management',
+    title: 'Google Reviews Management',
+    desc: 'Build trust and a strong online reputation.',
+    img: serviceIcon5,
+    waveClass: 'wave-purple'
+  },
+  {
+    path: '/gbp-verification-suspension',
+    title: 'GBP Verification & Suspension Assistance',
+    desc: 'Get expert support for verification, suspension and profile recovery.',
+    img: serviceIcon6,
+    waveClass: 'wave-green'
+  }
+]
+
 function ReferenceServiceCard({ service, title = service.title, description, showButton = false, icon: IconOverride }) {
   const Icon = IconOverride || service.icon
 
   return (
-    <article className="reference-service-card">
-      <Link
-        aria-label={`Learn more about ${title}`}
-        className={`reference-service-card-link ${showButton ? 'has-button' : ''}`}
-        to={service.path}
-      >
-        <span className="reference-service-icon"><Icon aria-hidden="true" size={30} /></span>
-        <h3>{title}</h3>
-        <p>{description || service.cardDescription || service.description}</p>
-        {showButton ? (
-          <span aria-hidden="true" className="reference-service-button">
-            Learn More <ArrowRight size={17} />
-          </span>
-        ) : (
-          <span aria-hidden="true" className="reference-service-arrow"><ArrowRight size={20} /></span>
-        )}
-      </Link>
-    </article>
+    <InteractiveCard3D className="reference-service-interactive-wrap" maxTilt={8} scale={1.02}>
+      <article className="reference-service-card">
+        <Link
+          aria-label={`Learn more about ${title}`}
+          className={`reference-service-card-link ${showButton ? 'has-button' : ''}`}
+          to={service.path}
+        >
+          <span className="reference-service-icon"><Icon aria-hidden="true" size={30} /></span>
+          <h3>{title}</h3>
+          <p>{description || service.cardDescription || service.description}</p>
+          {showButton ? (
+            <span aria-hidden="true" className="reference-service-button btn-tactile">
+              Learn More <ArrowRight size={17} />
+            </span>
+          ) : (
+            <span aria-hidden="true" className="reference-service-arrow"><ArrowRight size={20} /></span>
+          )}
+        </Link>
+      </article>
+    </InteractiveCard3D>
   )
 }
 
 function HomeAboutSection() {
   return (
-    <section aria-label="About ASK GMB Solution" className="reference-home-about">
+    <section aria-label="About ASK GMB Solution" className="reference-home-about reference-about-hero-section">
       <div className="page-container">
-        <div className="reference-home-about-card">
+        <div className="reference-home-about-card about-page-exact-frame">
           <div className="reference-home-about-copy">
             <span className="reference-eyebrow">ABOUT ASK GMB SOLUTION</span>
-            <h2>Your Trusted Partner for Digital Growth</h2>
+            <h2>
+              Your Trusted<br />
+              Partner for<br />
+              <span className="about-highlight-blue">Digital<br />Growth</span>
+            </h2>
             <p>
               ASK GMB Solution helps businesses build a strong online presence with result-driven digital
               marketing and modern technology solutions.
             </p>
-            <Link className="reference-button reference-button-primary" to="/about">
+            <Link className="reference-button reference-button-primary btn-tactile" to="/about">
               Know More About Us <ArrowRight aria-hidden="true" size={19} />
             </Link>
           </div>
-          <div className="reference-home-about-visual">
+
+          <div className="reference-home-about-visual about-exact-building-wrap">
             <img
-              alt="Modern glass business building with Google Business Profile and growth analytics"
-              loading="lazy"
-              src={growthBuildingImage}
+              alt="Modern glass corporate building with Google Business Profile 5-star rating, Google logo, growth analytics and glowing blue pedestal"
+              className="about-building-center-img"
+              fetchPriority="high"
+              src={buildingVisualCenter}
             />
           </div>
-          <div aria-label="ASK GMB Solution achievements" className="reference-home-about-stats" role="group">
-            {homeStats.map(({ value, label, icon: Icon }) => (
-              <div className="reference-mini-stat" key={label}>
-                <Icon aria-hidden="true" size={42} />
-                <span><strong>{value}</strong><span>{label}</span></span>
+
+          <div aria-label="ASK GMB Solution achievements" className="about-page-2x2-grid" role="group">
+            {/* Card 1 – Years of Experience (3D calendar on blue pedestal) */}
+            <div className="about-3d-stat-card card-cal">
+              <div className="about-stat-3d-pedestal-wrap">
+                <img src={stat3dCalendar} alt="Calendar" className="about-3d-pedestal-img" />
               </div>
-            ))}
+              <div className="about-3d-stat-copy">
+                <strong><AnimatedCounter value="5+" /></strong>
+                <span>Years of<br />Experience</span>
+              </div>
+              <div className="about-card-bottom-wave wave-blue" />
+            </div>
+
+            {/* Card 2 – Business Profiles Managed (3D users on purple pedestal) */}
+            <div className="about-3d-stat-card card-users">
+              <div className="about-stat-3d-pedestal-wrap">
+                <img src={stat3dUsers} alt="Users" className="about-3d-pedestal-img" />
+              </div>
+              <div className="about-3d-stat-copy">
+                <strong><AnimatedCounter value="200+" /></strong>
+                <span>Business<br />Profiles Managed</span>
+              </div>
+              <div className="about-card-bottom-wave wave-purple" />
+            </div>
+
+            {/* Card 3 – Websites Developed (3D laptop/code on blue pedestal) */}
+            <div className="about-3d-stat-card card-laptop">
+              <div className="about-stat-3d-pedestal-wrap">
+                <img src={stat3dLaptop} alt="Websites Developed" className="about-3d-pedestal-img" />
+              </div>
+              <div className="about-3d-stat-copy">
+                <strong><AnimatedCounter value="100+" /></strong>
+                <span>Websites<br />Developed</span>
+              </div>
+              <div className="about-card-bottom-wave wave-cyan" />
+            </div>
+
+            {/* Card 4 – Client Satisfaction (3D gold star & trophy on golden pedestal) */}
+            <div className="about-3d-stat-card card-star">
+              <div className="about-stat-3d-pedestal-wrap">
+                <img src={stat3dStar} alt="Client Satisfaction" className="about-3d-pedestal-img" />
+              </div>
+              <div className="about-3d-stat-copy">
+                <strong><AnimatedCounter value="95%" /></strong>
+                <span>Client<br />Satisfaction</span>
+              </div>
+              <div className="about-card-bottom-wave wave-gold" />
+            </div>
           </div>
         </div>
       </div>
@@ -1377,35 +1762,52 @@ function HomeAboutSection() {
 }
 
 function HomeServicesSection() {
-  const serviceTitles = {
-    '/local-seo': 'Local SEO Services',
-    '/search-engine-optimization': 'Search Engine Optimization (SEO)',
-    '/gbp-verification-suspension': 'GBP Verification & Suspension Assistance',
-  }
-
   return (
-    <section className="reference-home-services" id="services">
+    <section className="reference-home-services reference-3d-services-container" id="services">
       <div className="page-container">
-        <div className="reference-section-heading">
-          <span className="reference-eyebrow">OUR SERVICES</span>
-          <h2>Digital Growth Services for Your Business</h2>
-          <p>End-to-end digital solutions to improve your online visibility, attract more customers and grow your business.</p>
+        {/* Header with left laptop and right rocket illustrations */}
+        <div className="services-3d-header-wrap">
+          <div className="services-3d-side-illus left-illus">
+            <img src={servicesHeroLaptop} alt="Google Business Profile and Maps ranking" className="illus-blend-img" />
+          </div>
+          <div className="reference-section-heading services-3d-center-heading">
+            <span className="reference-eyebrow services-pill-badge">OUR SERVICES</span>
+            <h2>Digital Growth Services for <span className="text-highlight-blue">Your Business</span></h2>
+            <p>End-to-end digital solutions to improve your online visibility, attract more customers and grow your business.</p>
+          </div>
+          <div className="services-3d-side-illus right-illus">
+            <img src={servicesHeroRocket} alt="Business growth rocket and analytics" className="illus-blend-img" />
+          </div>
         </div>
-        <div className="reference-services-grid reference-services-grid-six">
-          {homepageServices.map((service) => (
-            <ReferenceServiceCard
-              description={referenceServiceDescriptions[service.path]}
-              icon={referenceServiceIcons[service.path]}
-              key={service.path}
-              service={service}
-              title={serviceTitles[service.path] || service.title}
-            />
+
+        {/* 6 3D Cards Grid */}
+        <div className="services-3d-cards-grid">
+          {sixServiceItems.map((item) => (
+            <Link key={item.title} to={item.path} className="service-3d-glass-card">
+              <div className="service-3d-card-body">
+                <div className="service-3d-icon-col">
+                  <img src={item.img} alt={item.title} className="service-3d-icon-img" />
+                </div>
+                <div className="service-3d-text-col">
+                  <h3>{item.title}</h3>
+                  <p>{item.desc}</p>
+                </div>
+                <div className="service-3d-arrow-btn">
+                  <ArrowRight size={18} />
+                </div>
+              </div>
+              <div className={`about-card-bottom-wave ${item.waveClass}`} />
+            </Link>
           ))}
         </div>
-        <div className="reference-section-action">
-          <Link className="reference-button reference-button-primary" to="/services">
-            View All Services <ArrowRight aria-hidden="true" size={19} />
-          </Link>
+
+        {/* View All Services Button with circular glow platform */}
+        <div className="services-3d-bottom-action">
+          <div className="services-glow-platform-base">
+            <Link className="reference-button reference-button-primary services-3d-btn" to="/services">
+              View All Services <ArrowRight aria-hidden="true" size={19} />
+            </Link>
+          </div>
         </div>
       </div>
     </section>
@@ -1414,29 +1816,82 @@ function HomeServicesSection() {
 
 function HomeIndustriesSection() {
   return (
-    <section className="reference-home-industries">
+    <section className="reference-home-industries industries-3d-full-section">
       <div className="page-container">
-        <div className="reference-home-industries-intro">
-          <div className="reference-home-industries-copy">
-            <span className="reference-eyebrow">
-              <Building2 aria-hidden="true" size={13} />
+        {/* Top Header with Blended Office Building Illustration */}
+        <div className="industries-3d-header-wrap">
+          <div className="reference-home-industries-copy industries-3d-header-copy">
+            <span className="reference-eyebrow services-pill-badge">
+              <Building2 aria-hidden="true" size={14} />
               INDUSTRIES WE SERVE
             </span>
-            <h2>Solutions Tailored<br />for <span>Your Industry</span></h2>
+            <h2>Solutions Tailored for <span className="text-highlight-blue">Your Industry</span></h2>
             <p>Industry-focused digital and technology solutions that drive measurable growth.</p>
           </div>
-          <img
-            alt="Modern glass office building surrounded by trees"
-            loading="lazy"
-            src={industriesHeroImage}
-          />
+          <div className="industries-3d-header-illus">
+            <img
+              alt="ASK GMB Solution office building with floating growth analytics and SEO badges"
+              className="industries-header-blend-img"
+              loading="lazy"
+              src={industriesBuildingHeader}
+            />
+          </div>
         </div>
-        <div className="reference-industry-focus-grid reference-home-industry-grid">
-          {industryFocusAreas.map((industry) => (
-            <IndustryFocusCard industry={industry} key={industry.id} variant="home" />
-          ))}
+
+        {/* 2 Big 3D Glassmorphism Cards: Healthcare & General Businesses */}
+        <div className="industries-3d-two-cards-grid">
+          {/* Healthcare Card */}
+          <div className="industry-3d-glass-card healthcare-3d-card">
+            <div className="industry-3d-card-inner">
+              <div className="industry-3d-visual-wrap">
+                <img src={industriesDoctorCard} alt="Healthcare Industry - Doctor with hospital and medical badges" className="industry-visual-img" />
+              </div>
+              <div className="industry-3d-content-wrap">
+                <div className="industry-badge-row">
+                  <span className="industry-icon-pill"><Hospital size={20} /></span>
+                  <h3>Healthcare Industry</h3>
+                </div>
+                <p>Digital solutions for doctors, clinics and hospitals.</p>
+                <ul className="industry-check-list">
+                  <li><Check size={16} /> Doctors &amp; Specialists</li>
+                  <li><Check size={16} /> Clinics &amp; Dental Clinics</li>
+                  <li><Check size={16} /> Hospitals &amp; Healthcare Centers</li>
+                  <li><Check size={16} /> Diagnostics &amp; Wellness Centers</li>
+                </ul>
+                <Link className="reference-button reference-button-primary btn-tactile industry-cta-btn" to="/services">
+                  Explore Healthcare Solutions <ArrowRight size={17} />
+                </Link>
+              </div>
+            </div>
+          </div>
+
+          {/* General Businesses Card */}
+          <div className="industry-3d-glass-card business-3d-card">
+            <div className="industry-3d-card-inner">
+              <div className="industry-3d-visual-wrap">
+                <img src={industriesStorefrontCard} alt="General Businesses - Storefront with laptop and growth chart" className="industry-visual-img" />
+              </div>
+              <div className="industry-3d-content-wrap">
+                <div className="industry-badge-row">
+                  <span className="industry-icon-pill"><Store size={20} /></span>
+                  <h3>General Businesses</h3>
+                </div>
+                <p>Growth-focused solutions for local and service businesses.</p>
+                <ul className="industry-check-list">
+                  <li><Check size={16} /> Local Businesses</li>
+                  <li><Check size={16} /> Startups</li>
+                  <li><Check size={16} /> Service Providers</li>
+                  <li><Check size={16} /> Educational &amp; Training Institutes</li>
+                </ul>
+                <Link className="reference-button reference-button-primary btn-tactile industry-cta-btn" to="/services">
+                  Explore Business Solutions <ArrowRight size={17} />
+                </Link>
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="reference-section-action">
+
+        <div className="reference-section-action" style={{ marginTop: '35px' }}>
           <Link className="reference-button reference-button-outline" to="/industries-we-serve">
             View All Industries <ArrowRight aria-hidden="true" size={18} />
           </Link>
@@ -1446,25 +1901,73 @@ function HomeIndustriesSection() {
   )
 }
 
+const sixWhyChooseItems = [
+  {
+    title: 'Google Business Profile Expertise',
+    desc: 'Practical support with profile accuracy, listing setup, and local search best practices.',
+    img: whyIcon1,
+    icon: MapPin
+  },
+  {
+    title: 'Healthcare Industry Knowledge',
+    desc: 'Deep familiarity with the sensitivity, patient privacy standards, and specialized local search needs of doctors, clinics, and hospitals.',
+    img: whyIcon2,
+    icon: HeartPulse
+  },
+  {
+    title: 'Local SEO Strategy',
+    desc: 'Focused optimization to help relevant nearby customers discover your business and services.',
+    img: whyIcon3,
+    icon: TrendingUp
+  },
+  {
+    title: 'Modern Website Development',
+    desc: 'High-performance engineering using modern frameworks like React and custom WordPress for speed, clean UX, and conversions.',
+    img: whyIcon4,
+    icon: Code2
+  },
+  {
+    title: 'Responsive Design',
+    desc: 'Responsive layouts designed to keep content and interactions clear across common screen sizes.',
+    img: whyIcon5,
+    icon: Smartphone
+  },
+  {
+    title: 'Direct Technical Support',
+    desc: 'Prompt, human-led assistance for hosting, domains, technical bugs, and ongoing digital updates without frustrating wait times.',
+    img: whyIcon6,
+    icon: Headphones
+  }
+]
+
 function HomeWhySection() {
   return (
-    <section className="reference-home-why">
+    <section className="reference-home-why why-3d-full-section">
       <div className="page-container">
-        <div className="reference-section-heading">
-          <span className="reference-eyebrow">WHY CHOOSE US</span>
-          <h2>Built Around What Actually Drives Results</h2>
+        <div className="reference-section-heading why-3d-heading">
+          <span className="reference-eyebrow services-pill-badge">
+            <Sparkles aria-hidden="true" size={14} />
+            WHY CHOOSE US
+          </span>
+          <h2>Built Around What Actually <span className="text-highlight-blue">Drives Results</span></h2>
           <p>We combine deep local SEO technicality with high-standard web engineering to deliver tangible business outcomes.</p>
         </div>
-        <div className="reference-why-grid">
-          {whyChooseFeatures.map(({ title, desc, icon: Icon, image }) => (
-            <article className="reference-why-card" key={title}>
-              <div className="reference-why-image"><img alt={title} loading="lazy" src={image} /></div>
-              <div className="reference-why-content">
-                <span className="reference-why-icon"><Icon aria-hidden="true" size={23} /></span>
-                <h3>{title}</h3>
-                <p>{desc}</p>
+        <div className="why-3d-cards-grid">
+          {sixWhyChooseItems.map(({ title, desc, icon: Icon, img }) => (
+            <div className="why-3d-glass-card" key={title}>
+              <div className="why-3d-card-inner">
+                <div className="why-3d-visual-wrap">
+                  <img src={img} alt={title} className="why-3d-visual-img" />
+                </div>
+                <div className="why-3d-content-wrap">
+                  <div className="why-3d-title-row">
+                    <span className="why-3d-icon-badge"><Icon size={18} /></span>
+                    <h3>{title}</h3>
+                  </div>
+                  <p>{desc}</p>
+                </div>
               </div>
-            </article>
+            </div>
           ))}
         </div>
       </div>
@@ -1474,129 +1977,235 @@ function HomeWhySection() {
 
 function HomeContactSection() {
   return (
-    <section className="reference-home-contact">
+    <section className="reference-home-contact contact-3d-dark-section">
       <div className="page-container">
-        <div className="reference-home-contact-hero">
-          <div className="reference-home-contact-copy">
-            <span className="reference-eyebrow">GET IN TOUCH</span>
-            <h2>Let’s Grow Your Business Together</h2>
-            <p>Have a project in mind? Get in touch with our team to discuss your goals and find the right digital solution.</p>
+        {/* Top Hero with 3D Laptop with Google Maps and Growth analytics */}
+        <div className="contact-3d-hero-wrap">
+          <div className="contact-3d-hero-copy">
+            <span className="reference-eyebrow services-pill-badge contact-pill-badge">
+              <Send size={14} /> GET IN TOUCH
+            </span>
+            <h2 className="contact-3d-main-title">
+              Let’s Grow Your Business <span className="text-highlight-cyan-underline">Together</span>
+            </h2>
+            <p className="contact-3d-subtitle">
+              Have a project in mind? Get in touch with our team to discuss your goals and find the right digital solution.
+            </p>
           </div>
-          <img
-            alt="Laptop showing local business growth analytics between office plants"
-            loading="lazy"
-            src={servicesHeroImage}
-          />
-        </div>
-        <div className="reference-contact-quick-links">
-          <a href={`tel:${siteConfig.phone}`}>
-            <Phone aria-hidden="true" size={28} />
-            <span><strong>Call Us</strong><small>Get in touch with our experts.</small></span>
-          </a>
-          <a href={whatsappHref} rel="noopener noreferrer" target="_blank">
-            <BrandWhatsApp size={28} />
-            <span><strong>WhatsApp</strong><small>Chat with us instantly.</small></span>
-          </a>
-          <a href={`mailto:${siteConfig.email}`}>
-            <Mail aria-hidden="true" size={28} />
-            <span><strong>Email Us</strong><small>Write to us for any enquiries.</small></span>
-          </a>
-        </div>
-        <div className="reference-home-contact-grid">
-          <ContactForm compact />
-          <aside className="reference-map-card">
-            <div className="reference-map-heading">
-              <MapPin aria-hidden="true" size={23} />
-              <h3>Our Location</h3>
-            </div>
-            <iframe
+          <div className="contact-3d-hero-visual">
+            <img
+              alt="3D Laptop displaying Google Maps location pin and rising analytics chart on glowing pedestal"
+              className="contact-3d-laptop-img"
               loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              src={mapEmbedUrl}
-              title={`ASK GMB Solution office location in ${siteConfig.city}`}
+              src={contact3dLaptop}
             />
-            <p>{siteConfig.address}</p>
-          </aside>
+          </div>
+        </div>
+
+        {/* 3 Equal Width Glassmorphism Contact Method Cards */}
+        <div className="contact-3d-cards-row">
+          <a className="contact-3d-pill-card" href={`tel:${siteConfig.phone}`}>
+            <span className="contact-3d-icon-circle"><PhoneCall size={20} /></span>
+            <div className="contact-3d-pill-text">
+              <strong>Call Us</strong>
+              <small>Get in touch with our experts.</small>
+            </div>
+          </a>
+
+          <a className="contact-3d-pill-card" href={whatsappHref} rel="noopener noreferrer" target="_blank">
+            <span className="contact-3d-icon-circle wa-circle"><BrandWhatsApp size={22} /></span>
+            <div className="contact-3d-pill-text">
+              <strong>WhatsApp</strong>
+              <small>Chat with us instantly.</small>
+            </div>
+          </a>
+
+          <a className="contact-3d-pill-card" href={`mailto:${siteConfig.email}`}>
+            <span className="contact-3d-icon-circle mail-circle"><Mail size={20} /></span>
+            <div className="contact-3d-pill-text">
+              <strong>Email Us</strong>
+              <small>Write to us for any enquiries.</small>
+            </div>
+          </a>
+        </div>
+
+        {/* Form and Location Side-by-Side Cards */}
+        <div className="contact-3d-body-grid">
+          <div className="contact-3d-form-card">
+            <ContactForm compact />
+          </div>
+          <div className="contact-3d-map-card">
+            <div className="contact-map-header">
+              <div className="map-badge-title">
+                <MapPin size={20} className="map-badge-icon" />
+                <h3>Our Location</h3>
+              </div>
+              <a href={directionsUrl} className="open-in-maps-btn" rel="noopener noreferrer" target="_blank">
+                Open in Maps <ArrowUpRight size={15} />
+              </a>
+            </div>
+            <div className="contact-map-iframe-wrap">
+              <iframe
+                loading="lazy"
+                referrerPolicy="no-referrer-when-downgrade"
+                src={mapEmbedUrl}
+                title={`ASK GMB Solution office location in ${siteConfig.city}`}
+              />
+            </div>
+          </div>
         </div>
       </div>
     </section>
   )
 }
 
-const faqItems = [
+const faq3dItems = [
   {
     question: 'Who does ASK GMB Solution work with?',
     answer: 'We support healthcare businesses such as doctors, clinics, and hospitals, as well as local businesses, startups, and service providers.',
+    iconImg: faqIcon1,
   },
   {
     question: 'Can you help improve our Google Maps visibility?',
     answer: 'We review your profile, website, and local presence, then recommend practical improvements. Search positions vary by location and competition, so we never promise a particular rank.',
+    iconImg: faqIcon2,
   },
   {
     question: 'Do you build both React and WordPress websites?',
     answer: 'Yes. We can help choose an approach based on your content workflow, features, integrations, and long-term maintenance needs.',
+    iconImg: faqIcon3,
   },
   {
     question: 'Can we work with you if we already have a website or profile?',
     answer: 'Absolutely. We can review what you already have and focus on useful improvements before recommending a rebuild.',
+    iconImg: faqIcon4,
   },
   {
     question: 'How do we get started?',
     answer: 'Share your goals through the contact form, phone, or WhatsApp. We’ll learn about your business and discuss practical next steps.',
+    iconImg: faqIcon5,
   },
 ]
 
 function FaqSection() {
+  const [openIndex, setOpenIndex] = useState(0)
+
   return (
-    <section className="content-section faq-home-section">
-      <div className="page-container faq-home-layout">
-        <div className="faq-home-intro">
-          <span className="eyebrow-badge"><Sparkles size={14} /> GOOD TO KNOW</span>
-          <h2 className="section-title">A few questions, answered.</h2>
-          <p className="section-subtitle">A clear, considered start to your next digital project.</p>
-          <Link className="button button-secondary" to="/contact">Talk to our team <ArrowRight size={17} /></Link>
-        </div>
-        <div className="faq-accordion-group">
-          {faqItems.map(({ question, answer }) => (
-            <details className="faq-item shadow-card" key={question}>
-              <summary>{question}</summary>
-              <p>{answer}</p>
-            </details>
-          ))}
+    <section className="faq-3d-dark-section">
+      <div className="page-container">
+        <div className="faq-3d-layout-grid">
+          {/* Left Column: Heading, Button, and 3D Bubble on Pedestal */}
+          <div className="faq-3d-left-col">
+            <span className="reference-eyebrow services-pill-badge faq-pill-badge">
+              <Sparkles size={14} /> GOOD TO KNOW
+            </span>
+            <h2 className="faq-3d-main-title">
+              A few questions,<br />
+              <span className="text-highlight-cyan-underline">answered.</span>
+            </h2>
+            <p className="faq-3d-subtitle">
+              A clear, considered start to your next digital project.
+            </p>
+            <div className="faq-3d-cta-row">
+              <Link className="faq-3d-white-btn" to="/contact">
+                Talk to our team <ArrowRight size={17} />
+              </Link>
+            </div>
+            <div className="faq-3d-bubble-visual-wrap">
+              <img
+                alt="3D FAQ Speech Bubble with Question Cube on Glowing Pedestal"
+                className="faq-3d-bubble-img"
+                loading="lazy"
+                src={faq3dBubble}
+              />
+            </div>
+          </div>
+
+          {/* Right Column: 5 Glassmorphism Accordion Cards */}
+          <div className="faq-3d-right-col">
+            {faq3dItems.map((item, index) => {
+              const isOpen = openIndex === index
+              return (
+                <div
+                  className={`faq-3d-card ${isOpen ? 'is-open' : ''}`}
+                  key={item.question}
+                  onClick={() => setOpenIndex(isOpen ? -1 : index)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) => {
+                    if (e.key === 'Enter' || e.key === ' ') {
+                      setOpenIndex(isOpen ? -1 : index)
+                    }
+                  }}
+                >
+                  <div className="faq-3d-card-header">
+                    <div className="faq-3d-icon-box">
+                      <img src={item.iconImg} alt="" className="faq-card-icon-img" />
+                    </div>
+                    <span className="faq-3d-question-text">{item.question}</span>
+                    <button
+                      type="button"
+                      aria-label="Toggle answer"
+                      className={`faq-3d-circle-btn ${isOpen ? 'is-active' : ''}`}
+                    >
+                      {isOpen ? '−' : '+'}
+                    </button>
+                  </div>
+                  {isOpen && (
+                    <div className="faq-3d-card-body">
+                      <p>{item.answer}</p>
+                    </div>
+                  )}
+                </div>
+              )
+            })}
+          </div>
         </div>
       </div>
     </section>
   )
 }
 
-// 12. CTA SECTION (NAVY & BLUE GRADIENT)
+// 12. CTA SECTION (3D ROYAL BLUE THEME WITH ROCKET & GROWTH TARGET)
 function FinalCta({
-  title = 'Ready to Grow Your Business Online?',
-  description = "Let's build a powerful digital presence for your business.",
+  title = 'Ready to Grow Your Business?',
+  description = "Tell us what you want to improve. We'll map out practical next steps for your business, customers, and team.",
 }) {
   return (
-    <section className="final-cta-section">
-      <div className="final-cta-glow-left" />
-      <div className="final-cta-glow-right" />
+    <section className="final-cta-section dark-3d-cta-section">
+      <div className="dark-cta-glow-curve" />
       <div className="page-container">
-        <div className="final-cta-box shadow-premium">
-          <div className="final-cta-content">
-            <span className="eyebrow-badge eyebrow-light">
+        <div className="dark-3d-cta-frame">
+          <div className="dark-3d-cta-left">
+            <span className="reference-eyebrow services-pill-badge cta-pill-badge">
               <Sparkles size={14} /> YOUR DIGITAL GROWTH PARTNER
             </span>
-            <h2 className="cta-headline">{title}</h2>
-            <p className="cta-subheading">{description}</p>
+            <h2 className="dark-3d-cta-title">
+              Ready to Grow Your <span className="text-highlight-cyan">Business?</span>
+            </h2>
+            <p className="dark-3d-cta-desc">{description}</p>
+            
             <div className="cta-btn-group">
               <Link className="button button-orange button-large" to="/contact">
                 Get Started <ArrowRight size={18} />
               </Link>
               <ScheduleCallButton className="cta-schedule-btn" />
             </div>
-            <div className="cta-trust-strip">
+
+            <div className="cta-trust-strip dark-cta-trust">
               <span><Check size={16} /> Google Business Profile Management</span>
               <span><Check size={16} /> Local SEO Strategy</span>
-              <span><Check size={16} /> Modern React & WordPress Web</span>
+              <span><Check size={16} /> Modern React &amp; WordPress Web</span>
             </div>
+          </div>
+
+          <div className="dark-3d-cta-right">
+            <img
+              alt="Rocket launch with growth chart and bullseye target"
+              className="dark-3d-cta-illus"
+              loading="lazy"
+              src={cta3dRocket}
+            />
           </div>
         </div>
       </div>
@@ -1612,6 +2221,20 @@ function HomePage() {
         description={`Complete digital growth and technology solutions for doctors, clinics, hospitals and businesses from ASK GMB Solution in ${siteConfig.city}.`}
         title={`Digital Marketing Agency in ${siteConfig.city}`}
       />
+      <div className="floating-social-pill" aria-label="Social links">
+        <a aria-label="Instagram" href={siteConfig.instagram} rel="noopener noreferrer" target="_blank" className="floating-social-icon social-ig">
+          <BrandIcon name="instagram" />
+        </a>
+        <a aria-label="Facebook" href={siteConfig.facebook} rel="noopener noreferrer" target="_blank" className="floating-social-icon social-fb">
+          <BrandIcon name="facebook" />
+        </a>
+        <a aria-label="LinkedIn" href={siteConfig.linkedin} rel="noopener noreferrer" target="_blank" className="floating-social-icon social-li">
+          <BrandIcon name="linkedin" />
+        </a>
+        <a aria-label="WhatsApp" href={whatsappHref} rel="noopener noreferrer" target="_blank" className="floating-social-icon social-wa">
+          <BrandWhatsApp size={20} />
+        </a>
+      </div>
       <main className="reference-home">
         <section className="reference-home-hero">
           <div aria-hidden="true" className="reference-hero-wave" />
@@ -1627,10 +2250,10 @@ function HomePage() {
                 Complete digital growth and technology solutions for Doctors, Clinics, Hospitals and Businesses.
               </p>
               <div className="reference-home-hero-actions">
-                <Link className="reference-button reference-button-primary" to="/services">
+                <Link className="reference-button reference-button-primary btn-tactile" to="/services">
                   Explore Our Services <ArrowRight aria-hidden="true" size={19} />
                 </Link>
-                <Link className="reference-button reference-button-outline" to="/our-process">
+                <Link className="reference-button reference-button-outline btn-tactile" to="/our-process">
                   <Play aria-hidden="true" fill="currentColor" size={16} /> See How We Work
                 </Link>
               </div>
@@ -1666,13 +2289,166 @@ function Breadcrumbs({ current }) {
   )
 }
 
+const servicesPageFeaturedSix = [
+  {
+    path: '/google-business-profile',
+    title: 'Google Business Profile Management',
+    desc: 'Optimize, manage and grow your GBP presence.',
+    img: serviceGrid1,
+    accent: 'blue',
+  },
+  {
+    path: '/google-maps-ranking',
+    title: 'Google Maps Ranking Improvement',
+    desc: 'Improve local visibility on Google Maps.',
+    img: serviceGrid2,
+    accent: 'purple',
+  },
+  {
+    path: '/local-seo',
+    title: 'Local SEO Services',
+    desc: 'Get found by local customers and increase enquiries.',
+    img: serviceGrid3,
+    accent: 'cyan',
+  },
+  {
+    path: '/search-engine-optimization',
+    title: 'Search Engine Optimization (SEO)',
+    desc: 'Improve search rankings and increase organic traffic.',
+    img: serviceGrid4,
+    accent: 'gold',
+  },
+  {
+    path: '/google-reviews-management',
+    title: 'Google Reviews Management',
+    desc: 'Build trust and a strong online reputation.',
+    img: serviceGrid5,
+    accent: 'purple',
+  },
+  {
+    path: '/gbp-verification-suspension',
+    title: 'GBP Verification & Suspension Assistance',
+    desc: 'Get expert support for verification, suspension and profile recovery.',
+    img: serviceGrid6,
+    accent: 'green',
+  },
+]
+
+const servicesPageDetailedNine = [
+  {
+    path: '/website-design-development',
+    title: 'Professional Website Design & Development',
+    desc: referenceServiceDescriptions['/website-design-development'],
+    img: serviceGrid7,
+    accent: 'blue',
+  },
+  {
+    path: '/mobile-app-development',
+    title: 'Mobile App Development',
+    desc: referenceServiceDescriptions['/mobile-app-development'],
+    img: serviceGrid8,
+    accent: 'purple',
+  },
+  {
+    path: '/digital-marketing-growth',
+    title: 'Digital Marketing & Growth',
+    desc: referenceServiceDescriptions['/digital-marketing-growth'],
+    img: serviceGrid9,
+    accent: 'gold',
+  },
+  {
+    path: '/google-business-profile',
+    title: 'Google Business Profile Management',
+    desc: referenceServiceDescriptions['/google-business-profile'],
+    img: serviceGrid1,
+    accent: 'blue',
+  },
+  {
+    path: '/google-maps-ranking',
+    title: 'Google Maps Ranking Improvement',
+    desc: referenceServiceDescriptions['/google-maps-ranking'],
+    img: serviceGrid2,
+    accent: 'purple',
+  },
+  {
+    path: '/local-seo',
+    title: 'Local SEO',
+    desc: referenceServiceDescriptions['/local-seo'],
+    img: serviceGrid3,
+    accent: 'cyan',
+  },
+  {
+    path: '/search-engine-optimization',
+    title: 'Search Engine Optimization',
+    desc: referenceServiceDescriptions['/search-engine-optimization'],
+    img: serviceGrid4,
+    accent: 'gold',
+  },
+  {
+    path: '/google-reviews-management',
+    title: 'Google Reviews Management',
+    desc: referenceServiceDescriptions['/google-reviews-management'],
+    img: serviceGrid5,
+    accent: 'purple',
+  },
+  {
+    path: '/gbp-verification-suspension',
+    title: 'GBP Verification and Suspension Assistance',
+    desc: referenceServiceDescriptions['/gbp-verification-suspension'],
+    img: serviceGrid6,
+    accent: 'green',
+  },
+]
+
 function ServicesPage() {
-  const serviceTitles = {
-    '/local-seo': 'Local SEO Services',
-    '/search-engine-optimization': 'Search Engine Optimization (SEO)',
-    '/gbp-verification-suspension': 'GBP Verification & Suspension Assistance',
-    '/website-design-development': 'Website Development',
-  }
+  const shouldReduceMotion = useReducedMotion()
+  const pageRef = useRef(null)
+
+  useEffect(() => {
+    if (shouldReduceMotion) return
+    const ctx = gsap.context(() => {
+      gsap.fromTo(
+        '.srv-hero-anim',
+        { opacity: 0, y: 24 },
+        { opacity: 1, y: 0, duration: 0.7, stagger: 0.08, ease: 'power3.out' }
+      )
+      gsap.fromTo(
+        '.srv-featured-card',
+        { opacity: 0, y: 30, scale: 0.97 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.6,
+          stagger: 0.08,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.srv-featured-grid',
+            start: 'top 88%',
+            toggleActions: 'play none none none',
+          },
+        }
+      )
+      gsap.fromTo(
+        '.srv-detailed-card',
+        { opacity: 0, y: 30, scale: 0.97 },
+        {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          duration: 0.6,
+          stagger: 0.07,
+          ease: 'power3.out',
+          scrollTrigger: {
+            trigger: '.srv-detailed-grid',
+            start: 'top 88%',
+            toggleActions: 'play none none none',
+          },
+        }
+      )
+    }, pageRef)
+    return () => ctx.revert()
+  }, [shouldReduceMotion])
 
   return (
     <>
@@ -1680,47 +2456,109 @@ function ServicesPage() {
         description={`Explore digital growth and technology services from ASK GMB Solution in ${siteConfig.city}, including Google Business Profile management, Local SEO and web development.`}
         title={`Digital Marketing & Website Development Services in ${siteConfig.city}`}
       />
-      <main className="reference-services-page">
-        <section className="reference-services-hero">
-          <div className="page-container reference-services-hero-grid">
-            <div className="reference-services-hero-copy">
-              <Breadcrumbs current="Services" />
-              <h1>Our Services</h1>
-              <p>End-to-end digital growth and technology solutions to strengthen your online presence and grow your business.</p>
+      <main className="srv-ref-page" ref={pageRef}>
+        {/* Top Light Sky-Blue Flowing Wave Backdrop */}
+        <div className="srv-bg-waves" aria-hidden="true">
+          <div className="srv-wave-ribbon srv-wave-top" />
+          <div className="srv-wave-ribbon srv-wave-mid" />
+          <div className="srv-wave-ribbon srv-wave-bot" />
+        </div>
+
+        {/* ── TOP SECTION: HERO BANNER + 6 FEATURED SERVICE CARDS ── */}
+        <section className="srv-top-section srv-top-with-banner">
+          <div className="srv-hero-banner-wrap srv-hero-anim">
+            <h1 className="sr-only">Digital Growth Services for Your Business</h1>
+            <img
+              src={servicesHeroBanner}
+              alt="Our Services — Digital Growth Services for Your Business: Expert Guidance, Quick Response, Customized Solutions"
+              className="srv-hero-banner-img"
+              loading="eager"
+            />
+          </div>
+
+          <div className="page-container srv-container">
+            {/* 6 FEATURED SERVICE CARDS (3 × 2) */}
+            <div className="srv-featured-grid">
+              {servicesPageFeaturedSix.map((item) => (
+                <Link
+                  key={item.title}
+                  to={item.path}
+                  className={`srv-glass-card srv-featured-card srv-accent-${item.accent}`}
+                >
+                  <div className="srv-card-sheen" aria-hidden="true" />
+                  <div className="srv-card-icon-wrap">
+                    <img src={item.img} alt={item.title} className="srv-card-icon-img" loading="lazy" />
+                  </div>
+                  <div className="srv-card-text">
+                    <h3>{item.title}</h3>
+                    <p>{item.desc}</p>
+                  </div>
+                  <span className="srv-card-circle-arrow" aria-hidden="true">
+                    <ArrowRight size={16} />
+                  </span>
+                  <span className={`srv-card-bottom-bar srv-bar-${item.accent}`} aria-hidden="true" />
+                </Link>
+              ))}
             </div>
-            <div className="reference-services-hero-visual">
-              <img
-                alt="Laptop displaying local ranking and business growth analytics between office plants"
-                fetchPriority="high"
-                src={servicesHeroImage}
-              />
+
+            {/* Centered CTA */}
+            <div className="srv-top-cta-wrap">
+              <Link className="srv-primary-pill-btn" to="/contact">
+                <span>Schedule a Consultation</span>
+                <ArrowRight aria-hidden="true" size={17} className="srv-btn-arrow" />
+              </Link>
             </div>
           </div>
         </section>
-        <div className="page-container">
-          <div aria-label="How we work" className="reference-services-promise">
-            <div><Target aria-hidden="true" size={32} /><strong>Result-Driven<br />Approach</strong></div>
-            <div><Users aria-hidden="true" size={32} /><strong>Healthcare<br />Industry Expertise</strong></div>
-            <div><ShieldCheck aria-hidden="true" size={32} /><strong>Transparent<br />Process</strong></div>
-            <div><Headphones aria-hidden="true" size={32} /><strong>Dedicated<br />Support</strong></div>
-          </div>
-        </div>
-        <section className="reference-services-catalog">
-          <div className="page-container">
-            <div className="reference-section-heading">
-              <span className="reference-eyebrow">OUR SERVICES</span>
-              <h2>Complete Digital Growth Solutions</h2>
+
+        {/* ── BOTTOM SECTION: 9 DETAILED SOLUTION CARDS (3 × 3) ── */}
+        <section className="srv-bottom-section">
+          <div className="page-container srv-container">
+            <div className="srv-bottom-header">
+              <span className="srv-pill-badge">DETAILED SOLUTIONS</span>
+              <h2 className="srv-bottom-title">
+                Complete Digital Growth &amp; Technology{' '}
+                <span className="srv-title-accent-wrap">
+                  <span className="srv-title-accent">Capabilities</span>
+                  <svg className="srv-title-swoosh" viewBox="0 0 200 18" fill="none" aria-hidden="true">
+                    <path
+                      d="M4 13C60 3 140 3 196 11"
+                      stroke="#1d68f2"
+                      strokeWidth="3.5"
+                      strokeLinecap="round"
+                    />
+                  </svg>
+                </span>
+              </h2>
             </div>
-            <div className="reference-services-grid reference-services-grid-nine">
-              {servicesPageHighlights.map((service) => (
-                <ReferenceServiceCard
-                  description={referenceServiceDescriptions[service.path]}
-                  icon={referenceServiceIcons[service.path]}
-                  key={service.path}
-                  service={service}
-                  showButton
-                  title={serviceTitles[service.path] || service.title}
-                />
+
+            <div className="srv-detailed-grid">
+              {servicesPageDetailedNine.map((item) => (
+                <article
+                  key={`${item.path}-${item.title}`}
+                  className={`srv-glass-card srv-detailed-card srv-accent-${item.accent}`}
+                >
+                  <div className="srv-card-sheen" aria-hidden="true" />
+                  <div className="srv-card-icon-wrap">
+                    <img src={item.img} alt={item.title} className="srv-card-icon-img" loading="lazy" />
+                  </div>
+                  <div className="srv-card-text">
+                    <h3>{item.title}</h3>
+                    <p>{item.desc}</p>
+                    <Link to={item.path} className="srv-learn-more-pill">
+                      <span>Learn More</span>
+                      <ArrowRight size={13} />
+                    </Link>
+                  </div>
+                  <Link
+                    to={item.path}
+                    className="srv-card-circle-arrow"
+                    aria-label={`Learn more about ${item.title}`}
+                  >
+                    <ArrowRight size={16} />
+                  </Link>
+                  <span className={`srv-card-bottom-bar srv-bar-${item.accent}`} aria-hidden="true" />
+                </article>
               ))}
             </div>
           </div>
@@ -1739,26 +2577,28 @@ function IndustryFocusCard({ industry, variant = 'main' }) {
   const services = isHome ? industry.homeServices || industry.services : industry.services
 
   return (
-    <article
-      className={`reference-industry-focus-card reference-industry-focus-card-${variant} reference-industry-focus-card-${industry.id}`}
-      id={industry.id}
-    >
-      <img alt={industry.title} loading="lazy" src={image} />
-      <div className="reference-industry-focus-content">
-        <span className="reference-industry-icon"><Icon aria-hidden="true" size={24} /></span>
-        <h3>{industry.title}</h3>
-        <p>{description}</p>
-        <ul>
-          {services.map((service) => (
-            <li key={service}><ServiceCheck aria-hidden="true" size={16} />{service}</li>
-          ))}
-        </ul>
-        <Link className="reference-button reference-button-primary" to="/services">
-          Explore {industry.id === 'healthcare' ? 'Healthcare' : 'Business'} Solutions
-          <ArrowRight aria-hidden="true" size={17} />
-        </Link>
-      </div>
-    </article>
+    <InteractiveCard3D className="reference-industry-interactive-wrap" maxTilt={6} scale={1.015}>
+      <article
+        className={`reference-industry-focus-card reference-industry-focus-card-${variant} reference-industry-focus-card-${industry.id}`}
+        id={industry.id}
+      >
+        <img alt={industry.title} loading="lazy" src={image} />
+        <div className="reference-industry-focus-content">
+          <span className="reference-industry-icon"><Icon aria-hidden="true" size={24} /></span>
+          <h3>{industry.title}</h3>
+          <p>{description}</p>
+          <ul>
+            {services.map((service) => (
+              <li key={service}><ServiceCheck aria-hidden="true" size={16} />{service}</li>
+            ))}
+          </ul>
+          <Link className="reference-button reference-button-primary btn-tactile" to="/services">
+            Explore {industry.id === 'healthcare' ? 'Healthcare' : 'Business'} Solutions
+            <ArrowRight aria-hidden="true" size={17} />
+          </Link>
+        </div>
+      </article>
+    </InteractiveCard3D>
   )
 }
 
@@ -1769,22 +2609,87 @@ function IndustriesPage() {
         description={`ASK GMB Solution supports doctors, clinics, hospitals, local businesses, startups, and service providers in ${siteConfig.city} with thoughtful digital growth and technology.`}
         title="Industries We Serve | Healthcare & Local Business"
       />
-      <main className="reference-industries-page">
-        <section className="reference-industries-hero">
-          <div className="page-container reference-industries-hero-grid">
-            <div className="reference-industries-hero-copy">
-              <Breadcrumbs current="Industries" />
-              <h1>Industries We Serve</h1>
-              <p>Industry-focused digital and technology solutions that drive measurable growth for healthcare and general businesses.</p>
+      <main className="reference-industries-page industries-3d-full-section">
+        {/* Top Header with Blended Office Building Illustration */}
+        <section className="industries-3d-page-hero">
+          <div className="page-container">
+            <div className="industries-3d-header-wrap">
+              <div className="reference-home-industries-copy industries-3d-header-copy">
+                <Breadcrumbs current="Industries" />
+                <span className="reference-eyebrow services-pill-badge">
+                  <Building2 aria-hidden="true" size={14} />
+                  INDUSTRIES WE SERVE
+                </span>
+                <h1>Solutions Tailored for <span className="text-highlight-blue">Your Industry</span></h1>
+                <p>Industry-focused digital and technology solutions that drive measurable growth.</p>
+              </div>
+              <div className="industries-3d-header-illus">
+                <img
+                  alt="ASK GMB Solution office building with floating growth analytics and SEO badges"
+                  className="industries-header-blend-img"
+                  fetchPriority="high"
+                  src={industriesBuildingHeader}
+                />
+              </div>
             </div>
-            <img
-              alt="Modern glass office building with trees"
-              fetchPriority="high"
-              src={industriesHeroImage}
-            />
+
+            {/* 2 Big 3D Glassmorphism Cards: Healthcare & General Businesses */}
+            <div className="industries-3d-two-cards-grid">
+              {/* Healthcare Card */}
+              <div className="industry-3d-glass-card healthcare-3d-card">
+                <div className="industry-3d-card-inner">
+                  <div className="industry-3d-visual-wrap">
+                    <img src={industriesDoctorCard} alt="Healthcare Industry - Doctor with hospital and medical badges" className="industry-visual-img" />
+                  </div>
+                  <div className="industry-3d-content-wrap">
+                    <div className="industry-badge-row">
+                      <span className="industry-icon-pill"><Hospital size={20} /></span>
+                      <h2>Healthcare Industry</h2>
+                    </div>
+                    <p>Digital solutions for doctors, clinics and hospitals.</p>
+                    <ul className="industry-check-list">
+                      <li><Check size={16} /> Doctors &amp; Specialists</li>
+                      <li><Check size={16} /> Clinics &amp; Dental Clinics</li>
+                      <li><Check size={16} /> Hospitals &amp; Healthcare Centers</li>
+                      <li><Check size={16} /> Diagnostics &amp; Wellness Centers</li>
+                    </ul>
+                    <Link className="reference-button reference-button-primary btn-tactile industry-cta-btn" to="/services">
+                      Explore Healthcare Solutions <ArrowRight size={17} />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+
+              {/* General Businesses Card */}
+              <div className="industry-3d-glass-card business-3d-card">
+                <div className="industry-3d-card-inner">
+                  <div className="industry-3d-visual-wrap">
+                    <img src={industriesStorefrontCard} alt="General Businesses - Storefront with laptop and growth chart" className="industry-visual-img" />
+                  </div>
+                  <div className="industry-3d-content-wrap">
+                    <div className="industry-badge-row">
+                      <span className="industry-icon-pill"><Store size={20} /></span>
+                      <h2>General Businesses</h2>
+                    </div>
+                    <p>Growth-focused solutions for local and service businesses.</p>
+                    <ul className="industry-check-list">
+                      <li><Check size={16} /> Local Businesses</li>
+                      <li><Check size={16} /> Startups</li>
+                      <li><Check size={16} /> Service Providers</li>
+                      <li><Check size={16} /> Educational &amp; Training Institutes</li>
+                    </ul>
+                    <Link className="reference-button reference-button-primary btn-tactile industry-cta-btn" to="/services">
+                      Explore Business Solutions <ArrowRight size={17} />
+                    </Link>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </section>
-        <div className="page-container">
+
+        {/* Promise strip */}
+        <div className="page-container" style={{ marginTop: '40px' }}>
           <div aria-label="Our industry-focused approach" className="reference-industries-promise">
             <div><Target aria-hidden="true" size={31} /><strong>Industry-Specific<br />Strategies</strong></div>
             <div><Users aria-hidden="true" size={31} /><strong>Experienced<br />Team</strong></div>
@@ -1792,19 +2697,6 @@ function IndustriesPage() {
             <div><ShieldCheck aria-hidden="true" size={31} /><strong>Trusted by<br />Businesses</strong></div>
           </div>
         </div>
-        <section className="reference-industries-content">
-          <div className="page-container">
-            <div className="reference-section-heading">
-              <span className="reference-eyebrow">OUR INDUSTRIES</span>
-              <h2>Delivering Digital Growth Across Key Industries</h2>
-            </div>
-            <div className="reference-industry-focus-grid">
-              {industryFocusAreas.map((industry) => (
-                <IndustryFocusCard industry={industry} key={industry.id} variant="main" />
-              ))}
-            </div>
-          </div>
-        </section>
       </main>
     </>
   )
@@ -1817,33 +2709,8 @@ function ProcessPage() {
         description="See how ASK GMB Solution understands your goals, plans a focused strategy, delivers the work, and continually tracks growth."
         title="Our Process | A Clear Digital Growth Roadmap"
       />
-      <main className="reference-process-page">
-        <section className="reference-process-page-hero">
-          <div className="page-container reference-process-page-hero-grid">
-            <div className="reference-process-page-copy">
-              <Breadcrumbs current="Our Process" />
-              <h1>Our Process</h1>
-              <p>A clear, structured and result-oriented approach to grow your business online.</p>
-            </div>
-          </div>
-        </section>
-        <section aria-label="Our four-step process" className="reference-process-page-steps">
-          <div className="page-container">
-            <div className="reference-process-flow">
-              <svg aria-hidden="true" className="reference-process-flow-path" preserveAspectRatio="none" viewBox="0 0 900 170">
-                <path d="M112 31 C190 10 230 149 337 149 S470 28 562 28 S690 147 787 147" />
-              </svg>
-              {processSteps.map(({ step, title, desc, icon: Icon }, index) => (
-                <article className={`reference-process-flow-card step-${index + 1}`} key={step}>
-                  <span className="reference-process-flow-node"><Icon aria-hidden="true" size={31} /></span>
-                  <span className="reference-process-number">{step}</span>
-                  <h2>{title}</h2>
-                  <p>{desc}</p>
-                </article>
-              ))}
-            </div>
-          </div>
-        </section>
+      <main className="proc-ref-page-main">
+        <ProcessSection isPage />
       </main>
     </>
   )
@@ -1857,65 +2724,273 @@ function AboutPage() {
         title="About ASK GMB Solution | Digital Growth & Technology"
       />
       <main className="reference-about-page">
-        <section className="reference-about-page-hero">
-          <div className="page-container reference-about-page-hero-inner">
-            <div className="reference-about-page-copy">
-              <Breadcrumbs current="About Us" />
-              <span className="reference-eyebrow">ABOUT ASK GMB SOLUTION</span>
-              <h1>About<br />ASK GMB Solution</h1>
-              <p>A digital growth and technology agency focused on real business results.</p>
-            </div>
-            <img
-              alt="ASK GMB Solution office reception with the company logo"
-              fetchPriority="high"
-              src={officeReceptionImage}
-            />
-          </div>
-        </section>
-        <section className="reference-about-story-section">
+        <section aria-label="About ASK GMB Solution" className="reference-about-hero-section">
           <div className="page-container">
-            <div className="reference-about-story">
-              <img
-                alt="ASK GMB Solution team collaborating around a laptop"
-                className="reference-about-team-image"
-                loading="lazy"
-                src={aboutTeamImage}
-              />
-              <div className="reference-about-story-copy">
-                <span className="reference-eyebrow">WHO WE ARE</span>
-                <h2>Your Partner for Digital Growth &amp; Technology</h2>
+            <div className="reference-home-about-card about-page-exact-frame">
+              <div className="reference-home-about-copy">
+                <span className="reference-eyebrow">ABOUT ASK GMB SOLUTION</span>
+                <h2>
+                  Your Trusted<br />
+                  Partner for<br />
+                  <span className="about-highlight-blue">Digital<br />Growth</span>
+                </h2>
                 <p>
-                  ASK GMB Solution helps healthcare businesses and general businesses build a strong
-                  online presence with result-driven digital marketing and modern technology solutions.
+                  ASK GMB Solution helps businesses build a strong online presence with result-driven digital
+                  marketing and modern technology solutions.
                 </p>
+                <Link className="reference-button reference-button-primary btn-tactile" to="/contact">
+                  Know More About Us <ArrowRight aria-hidden="true" size={19} />
+                </Link>
               </div>
-              <div className="reference-about-pillars">
-                <article>
-                  <span><Target aria-hidden="true" size={27} /></span>
-                  <div><h3>Our Mission</h3><p>To empower businesses with powerful digital solutions that drive real growth.</p></div>
-                </article>
-                <article>
-                  <span><Eye aria-hidden="true" size={27} /></span>
-                  <div><h3>Our Vision</h3><p>To be a trusted and leading digital growth and technology agency for healthcare and local businesses.</p></div>
-                </article>
-                <article>
-                  <span><Gem aria-hidden="true" size={27} /></span>
-                  <div><h3>Our Values</h3><p>Trust, Transparency, Results, Innovation and Long-Term Partnership.</p></div>
-                </article>
+
+              <div className="reference-home-about-visual about-exact-building-wrap">
+                <img
+                  alt="Modern glass corporate building with Google Business Profile 5-star rating, Google logo, growth analytics and glowing blue pedestal"
+                  className="about-building-center-img"
+                  fetchPriority="high"
+                  src={buildingVisualCenter}
+                />
               </div>
-            </div>
-            <div aria-label="ASK GMB Solution achievements" className="reference-about-stats">
-              {aboutStats.map(({ value, label, icon: Icon }) => (
-                <div className="reference-about-stat" key={label}>
-                  <Icon aria-hidden="true" size={39} />
-                  <span><strong>{value}</strong><span>{label}</span></span>
+
+              <div aria-label="ASK GMB Solution achievements" className="about-page-2x2-grid" role="group">
+                {/* Card 1 – Years of Experience (3D calendar on blue pedestal) */}
+                <div className="about-3d-stat-card card-cal">
+                  <div className="about-stat-3d-pedestal-wrap">
+                    <img src={stat3dCalendar} alt="Calendar" className="about-3d-pedestal-img" />
+                  </div>
+                  <div className="about-3d-stat-copy">
+                    <strong><AnimatedCounter value="5+" /></strong>
+                    <span>Years of<br />Experience</span>
+                  </div>
+                  <div className="about-card-bottom-wave wave-blue" />
                 </div>
-              ))}
+
+                {/* Card 2 – Business Profiles Managed (3D users on purple pedestal) */}
+                <div className="about-3d-stat-card card-users">
+                  <div className="about-stat-3d-pedestal-wrap">
+                    <img src={stat3dUsers} alt="Users" className="about-3d-pedestal-img" />
+                  </div>
+                  <div className="about-3d-stat-copy">
+                    <strong><AnimatedCounter value="200+" /></strong>
+                    <span>Business<br />Profiles Managed</span>
+                  </div>
+                  <div className="about-card-bottom-wave wave-purple" />
+                </div>
+
+                {/* Card 3 – Websites Developed (3D laptop/code on blue pedestal) */}
+                <div className="about-3d-stat-card card-laptop">
+                  <div className="about-stat-3d-pedestal-wrap">
+                    <img src={stat3dLaptop} alt="Websites Developed" className="about-3d-pedestal-img" />
+                  </div>
+                  <div className="about-3d-stat-copy">
+                    <strong><AnimatedCounter value="100+" /></strong>
+                    <span>Websites<br />Developed</span>
+                  </div>
+                  <div className="about-card-bottom-wave wave-cyan" />
+                </div>
+
+                {/* Card 4 – Client Satisfaction (3D gold star & trophy on golden pedestal) */}
+                <div className="about-3d-stat-card card-star">
+                  <div className="about-stat-3d-pedestal-wrap">
+                    <img src={stat3dStar} alt="Client Satisfaction" className="about-3d-pedestal-img" />
+                  </div>
+                  <div className="about-3d-stat-copy">
+                    <strong><AnimatedCounter value="95%" /></strong>
+                    <span>Client<br />Satisfaction</span>
+                  </div>
+                  <div className="about-card-bottom-wave wave-gold" />
+                </div>
+              </div>
             </div>
           </div>
         </section>
+
+        <AboutWhoWeAreSection />
       </main>
     </>
+  )
+}
+
+function AboutWhoWeAreSection() {
+  const sectionRef = useRef(null)
+  const stageRef = useRef(null)
+  const shouldReduceMotion = useReducedMotion()
+
+  useEffect(() => {
+    if (shouldReduceMotion || !sectionRef.current) return
+
+    const ctx = gsap.context(() => {
+      gsap.from('.about-3d-reveal', {
+        y: 28,
+        opacity: 0,
+        duration: 0.75,
+        stagger: 0.1,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 78%',
+          once: true,
+        },
+      })
+
+      gsap.from('.about-3d-pillar-card', {
+        y: 36,
+        opacity: 0,
+        scale: 0.96,
+        duration: 0.7,
+        stagger: 0.14,
+        ease: 'power3.out',
+        scrollTrigger: {
+          trigger: '.about-3d-pillars-grid',
+          start: 'top 84%',
+          once: true,
+        },
+      })
+    }, sectionRef)
+
+    return () => ctx.revert()
+  }, [shouldReduceMotion])
+
+  const handleStageMove = (e) => {
+    if (shouldReduceMotion || !stageRef.current || window.innerWidth < 900) return
+    const rect = stageRef.current.getBoundingClientRect()
+    const x = (e.clientX - rect.left) / rect.width - 0.5
+    const y = (e.clientY - rect.top) / rect.height - 0.5
+    stageRef.current.style.setProperty('--tilt-x', `${(-y * 8).toFixed(2)}deg`)
+    stageRef.current.style.setProperty('--tilt-y', `${(x * 10).toFixed(2)}deg`)
+  }
+
+  const handleStageLeave = () => {
+    if (!stageRef.current) return
+    stageRef.current.style.setProperty('--tilt-x', '0deg')
+    stageRef.current.style.setProperty('--tilt-y', '0deg')
+  }
+
+  const pillars = [
+    {
+      title: 'Our Mission',
+      text: 'To empower businesses with powerful digital solutions that drive real growth.',
+      image: aboutMission3d,
+      alt: '3D target illustration on glowing pedestal',
+      variant: 'mission',
+    },
+    {
+      title: 'Our Vision',
+      text: 'To be a trusted and leading digital growth and technology agency for healthcare and local businesses.',
+      image: aboutVision3d,
+      alt: '3D binoculars illustration on glowing pedestal',
+      variant: 'vision',
+    },
+    {
+      title: 'Our Values',
+      text: 'Trust, Transparency, Results, Innovation and Long-Term Partnership.',
+      image: aboutValues3d,
+      alt: '3D blue diamond illustration on cyan pedestal',
+      variant: 'values',
+    },
+  ]
+
+  return (
+    <section ref={sectionRef} className="about-3d-who-section">
+      {/* Ambient futuristic background layers */}
+      <div className="about-3d-bg-mesh" aria-hidden="true" />
+      <div className="about-3d-bg-ring about-3d-bg-ring--left" aria-hidden="true" />
+      <div className="about-3d-bg-ring about-3d-bg-ring--right" aria-hidden="true" />
+      <div className="about-3d-bg-dots" aria-hidden="true" />
+      <svg className="about-3d-bg-wave" viewBox="0 0 1440 220" preserveAspectRatio="none" aria-hidden="true">
+        <path
+          d="M0,160 C320,210 520,80 860,130 C1140,170 1300,90 1440,60 L1440,220 L0,220 Z"
+          fill="url(#aboutWaveGrad)"
+        />
+        <defs>
+          <linearGradient id="aboutWaveGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+            <stop offset="0%" stopColor="rgba(56, 189, 248, 0.14)" />
+            <stop offset="50%" stopColor="rgba(37, 99, 235, 0.1)" />
+            <stop offset="100%" stopColor="rgba(14, 165, 233, 0.18)" />
+          </linearGradient>
+        </defs>
+      </svg>
+
+      <div className="page-container about-3d-container">
+        <div className="about-3d-hero-grid">
+          {/* Left: Exact 3D Hero Stage Image with Mouse Parallax */}
+          <div
+            ref={stageRef}
+            className="about-3d-stage about-3d-reveal"
+            onMouseMove={handleStageMove}
+            onMouseLeave={handleStageLeave}
+          >
+            <div className="about-3d-frame-wrap about-3d-frame-wrap--img">
+              <img
+                alt="ASK GMB Solution 3D Digital Growth Partner stage with team, Google Business Profile, Local SEO Ranking, Patient Reviews, and Business Growth"
+                className="about-3d-stage-img"
+                loading="lazy"
+                src={aboutHero3dStage}
+              />
+            </div>
+          </div>
+
+          {/* Right: Heading, Copy & Service Chips */}
+          <div className="about-3d-copy">
+            <span className="about-3d-eyebrow about-3d-reveal">
+              <Users size={15} /> WHO WE ARE
+            </span>
+            <h2 className="about-3d-title about-3d-reveal">
+              Your Partner for{' '}
+              <span className="about-3d-title-gradient">
+                Digital Growth &amp; Technology
+              </span>
+            </h2>
+            <p className="about-3d-lead about-3d-reveal">
+              ASK GMB Solution helps healthcare businesses and general businesses build a strong
+              online presence with result-driven digital marketing and modern technology solutions.
+            </p>
+
+            <div className="about-3d-chips-row about-3d-reveal">
+              <div className="about-3d-service-chip">
+                <span className="about-3d-chip-icon about-3d-chip-icon--gbp">
+                  <MapPin size={18} />
+                </span>
+                <span>Google Business Profile (GBP)</span>
+              </div>
+              <div className="about-3d-service-chip">
+                <span className="about-3d-chip-icon about-3d-chip-icon--seo">
+                  <BarChart3 size={18} />
+                </span>
+                <span>Local SEO</span>
+              </div>
+              <div className="about-3d-service-chip">
+                <span className="about-3d-chip-icon about-3d-chip-icon--web">
+                  <Monitor size={18} />
+                </span>
+                <span>Website Development</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Bottom: Mission, Vision & Values 3D Glassmorphism Cards */}
+        <div className="about-3d-pillars-grid">
+          {pillars.map((pillar) => (
+            <motion.article
+              key={pillar.title}
+              className={`about-3d-pillar-card about-3d-pillar-card--${pillar.variant}`}
+              whileHover={shouldReduceMotion ? undefined : { y: -6, rotateX: 2, rotateY: -2 }}
+              transition={{ type: 'spring', stiffness: 260, damping: 20 }}
+            >
+              <div className="about-3d-pillar-visual">
+                <img src={pillar.image} alt={pillar.alt} loading="lazy" />
+              </div>
+              <div className="about-3d-pillar-body">
+                <h3>{pillar.title}</h3>
+                <span className="about-3d-pillar-accent" aria-hidden="true" />
+                <p>{pillar.text}</p>
+              </div>
+            </motion.article>
+          ))}
+        </div>
+      </div>
+    </section>
   )
 }
 
@@ -2130,10 +3205,53 @@ function MobileAppPage() {
   )
 }
 
+// Blog card icon map (1-indexed, matches 12 articles in order)
+const BLOG_CARD_ICONS = [
+  blogCard1, blogCard2, blogCard3, blogCard4,
+  blogCard5, blogCard6, blogCard7, blogCard8,
+  blogCard9, blogCard10, blogCard11, blogCard12,
+]
+
+// Category icon for filter chips
+const CATEGORY_ICONS = {
+  'All': '',
+  'Google Business Profile': 'G',
+  'Local SEO': '📍',
+  'Website Development': '</>',
+  'Digital Marketing': '📊',
+}
+
+// Animated floating particles background
+function BlogParticles() {
+  const particles = Array.from({ length: 18 }, (_, i) => i)
+  return (
+    <div className="blog-particles" aria-hidden="true">
+      {particles.map((i) => (
+        <span
+          key={i}
+          className="blog-particle"
+          style={{
+            left: `${(i * 5.6 + 3) % 100}%`,
+            top: `${(i * 7.3 + 10) % 100}%`,
+            animationDelay: `${(i * 0.4) % 6}s`,
+            animationDuration: `${6 + (i % 4)}s`,
+            width: `${3 + (i % 4)}px`,
+            height: `${3 + (i % 4)}px`,
+            opacity: 0.3 + (i % 3) * 0.15,
+          }}
+        />
+      ))}
+    </div>
+  )
+}
+
 // BLOG PAGE
 function BlogPage() {
   const [search, setSearch] = useState('')
   const [category, setCategory] = useState('All')
+  const shouldReduceMotion = useReducedMotion()
+  const heroRef = useRef(null)
+  const cardsRef = useRef(null)
   const categories = ['All', ...new Set(articles.map((article) => article.category))]
 
   const filteredArticles = articles.filter((article) => {
@@ -2142,74 +3260,229 @@ function BlogPage() {
     return matchesCategory && matchesSearch
   })
 
+  // GSAP cinematic hero entrance
+  useEffect(() => {
+    if (shouldReduceMotion) return
+    const ctx = gsap.context(() => {
+      gsap.fromTo('.blog-hero-badge', { opacity: 0, y: -20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power3.out' })
+      gsap.fromTo('.blog-hero-breadcrumb', { opacity: 0, x: -20 }, { opacity: 1, x: 0, duration: 0.5, delay: 0.1, ease: 'power3.out' })
+      gsap.fromTo('.blog-hero-headline', { opacity: 0, y: 40 }, { opacity: 1, y: 0, duration: 0.9, delay: 0.2, ease: 'power3.out' })
+      gsap.fromTo('.blog-hero-desc', { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 0.7, delay: 0.4, ease: 'power3.out' })
+      gsap.fromTo('.blog-hero-ctas', { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6, delay: 0.55, ease: 'power3.out' })
+      gsap.fromTo('.blog-hero-visual', { opacity: 0, x: 60, scale: 0.9 }, { opacity: 1, x: 0, scale: 1, duration: 1.0, delay: 0.3, ease: 'power3.out' })
+      gsap.fromTo('.blog-hero-glow-line', { scaleX: 0, opacity: 0 }, { scaleX: 1, opacity: 1, duration: 1.2, delay: 0.6, ease: 'power2.out', transformOrigin: 'left center' })
+    }, heroRef)
+    return () => ctx.revert()
+  }, [shouldReduceMotion])
+
+  // GSAP staggered card reveals on scroll
+  useEffect(() => {
+    if (shouldReduceMotion) return
+    const ctx = gsap.context(() => {
+      gsap.fromTo('.blog-premium-card',
+        { opacity: 0, y: 50, scale: 0.95 },
+        {
+          opacity: 1, y: 0, scale: 1,
+          duration: 0.65, ease: 'power3.out',
+          stagger: { amount: 0.9, from: 'start' },
+          scrollTrigger: {
+            trigger: '.blog-cards-grid',
+            start: 'top 85%',
+            toggleActions: 'play none none none',
+          },
+        }
+      )
+    }, cardsRef)
+    return () => ctx.revert()
+  }, [filteredArticles, shouldReduceMotion])
+
   return (
     <>
       <Metadata
         description="Practical insights, actionable guides, and best practices on Google Business Profile optimization, Local SEO, and modern website development from ASK GMB Solution."
         title="Digital Growth & Local SEO Blogs"
       />
-      <main>
-        <PageHero
-          description="Explore practical insights, algorithm guidance, and actionable strategies on local search, healthcare marketing, and website engineering."
-          eyebrow="ASK GMB SOLUTION KNOWLEDGE HUB"
-          image="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&w=1100&q=80"
-          title="Insights & Strategies for Digital Growth"
-        />
+      <main className="blog-page-main">
 
-        <section className="content-section">
-          <div className="page-container">
-            <div className="blog-filter-bar">
-              <div className="blog-search-box shadow-card">
-                <Search size={18} />
-                <input
-                  aria-label="Search articles"
-                  onChange={(e) => setSearch(e.target.value)}
-                  placeholder="Search articles on Google Business Profile, Local SEO, Web..."
-                  type="search"
-                  value={search}
-                />
+        {/* ── PREMIUM HERO ── */}
+        <section className="blog-hero-section" ref={heroRef}>
+          <BlogParticles />
+          <div className="blog-hero-glow-orb blog-hero-glow-orb--1" aria-hidden="true" />
+          <div className="blog-hero-glow-orb blog-hero-glow-orb--2" aria-hidden="true" />
+          <div className="blog-hero-glow-orb blog-hero-glow-orb--3" aria-hidden="true" />
+
+          <div className="blog-hero-inner page-container">
+            {/* LEFT */}
+            <div className="blog-hero-left">
+              <nav className="blog-hero-breadcrumb" aria-label="Breadcrumb">
+                <Link to="/">Home</Link>
+                <span className="blog-hero-breadcrumb-sep">›</span>
+                <span>Insights & Strategies for Digital Growth</span>
+              </nav>
+
+              <div className="blog-hero-badge">
+                <BookOpen size={16} className="blog-hero-badge-icon" />
+                <span>ASK GMB SOLUTION KNOWLEDGE HUB</span>
               </div>
 
-              <div className="category-chips">
-                {categories.map((cat) => (
-                  <button
-                    className={`cat-chip ${category === cat ? 'active' : ''}`}
-                    key={cat}
-                    onClick={() => setCategory(cat)}
-                    type="button"
-                  >
-                    {cat}
-                  </button>
-                ))}
+              <h1 className="blog-hero-headline">
+                <span className="blog-hero-headline-top">Insights &amp; Strategies for</span>
+                <span className="blog-hero-headline-bottom">
+                  <span className="blog-hero-gradient-text">Digital Growth</span>
+                  <span className="blog-hero-swoosh" aria-hidden="true">
+                    <svg width="140" height="26" viewBox="0 0 140 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <path d="M4 22C45 6 95 3 136 12" stroke="url(#cyan-swoosh)" strokeWidth="3.5" strokeLinecap="round" />
+                      <defs>
+                        <linearGradient id="cyan-swoosh" x1="4" y1="22" x2="136" y2="12" gradientUnits="userSpaceOnUse">
+                          <stop stopColor="#38bdf8" />
+                          <stop offset="1" stopColor="#38bdf8" stopOpacity="0" />
+                        </linearGradient>
+                      </defs>
+                    </svg>
+                  </span>
+                </span>
+              </h1>
+
+              <div className="blog-hero-glow-line" aria-hidden="true" />
+
+              <p className="blog-hero-desc">
+                Explore practical insights, algorithm guidance, and actionable strategies on local search, healthcare marketing, and website engineering.
+              </p>
+
+              <div className="blog-hero-ctas">
+                <Link to="/contact" className="blog-cta-primary">
+                  <span>Talk to Our Team</span>
+                  <ArrowRight size={16} className="blog-cta-arrow" />
+                </Link>
+                <Link to="/contact" className="blog-cta-secondary">
+                  <PhoneCall size={16} />
+                  <span>Schedule a Call</span>
+                  <ChevronDown size={14} />
+                </Link>
               </div>
             </div>
 
-            <div className="articles-grid">
-              {filteredArticles.map((article) => (
-                <article className="article-card shadow-card" key={article.slug}>
-                  <div className="article-meta-row">
-                    <span className="article-category">{article.category}</span>
-                  </div>
-                  <h3 className="article-title">
-                    <Link to={`/blogs/${article.slug}`}>{article.title}</Link>
-                  </h3>
-                  <p className="article-summary">{article.summary}</p>
-                  <div className="article-footer">
-                    <Link className="read-more-link" to={`/blogs/${article.slug}`}>
-                      <span>Read Practical Guide</span>
-                      <ArrowRight size={16} />
-                    </Link>
-                  </div>
-                </article>
+            {/* RIGHT — 3D illustration */}
+            <div className="blog-hero-visual" aria-hidden="true">
+              <div className="blog-hero-visual-glow" />
+              <img
+                src={blogHeroStage}
+                alt="Blog 3D Illustration"
+                className="blog-hero-visual-img"
+                loading="eager"
+              />
+            </div>
+          </div>
+        </section>
+
+        {/* ── SEARCH + FILTERS ── */}
+        <section className="blog-filters-section">
+          <div className="blog-filters-inner page-container">
+            {/* Glass search bar */}
+            <div className="blog-glass-search">
+              <Search size={18} className="blog-search-icon" />
+              <input
+                aria-label="Search articles"
+                className="blog-search-input"
+                onChange={(e) => setSearch(e.target.value)}
+                placeholder="Search articles on Google Business Profile, Local SEO, Web..."
+                type="search"
+                value={search}
+              />
+              {search && (
+                <button
+                  className="blog-search-clear"
+                  onClick={() => setSearch('')}
+                  type="button"
+                  aria-label="Clear search"
+                >
+                  <X size={15} />
+                </button>
+              )}
+            </div>
+
+            {/* Category filter chips */}
+            <div className="blog-cat-chips">
+              {categories.map((cat) => (
+                <button
+                  className={`blog-cat-chip ${category === cat ? 'is-active' : ''}`}
+                  key={cat}
+                  onClick={() => setCategory(cat)}
+                  type="button"
+                >
+                  {cat !== 'All' && CATEGORY_ICONS[cat] && (
+                    <span className="blog-cat-icon">{CATEGORY_ICONS[cat]}</span>
+                  )}
+                  <span>{cat}</span>
+                </button>
               ))}
             </div>
+          </div>
+        </section>
 
-            {filteredArticles.length === 0 && (
-              <div className="no-results-box">
-                <Search size={36} />
-                <h3>No articles found</h3>
-                <p>Try adjusting your search terms or select "All" categories.</p>
+        {/* ── BLOG CARDS GRID ── */}
+        <section className="blog-cards-section" ref={cardsRef}>
+          <div className="page-container">
+            {filteredArticles.length > 0 ? (
+              <div className="blog-cards-grid">
+                {filteredArticles.map((article, idx) => {
+                  const artIdx = articles.indexOf(article)
+                  const iconSrc = BLOG_CARD_ICONS[artIdx % BLOG_CARD_ICONS.length]
+                  return (
+                    <article className="blog-premium-card" key={article.slug}>
+                      {/* 3D Icon column on left */}
+                      <div className="blog-card-icon-wrap">
+                        <img
+                          src={iconSrc}
+                          alt=""
+                          className="blog-card-icon-img"
+                          loading="lazy"
+                        />
+                      </div>
+
+                      {/* Text details column on right */}
+                      <div className="blog-card-content">
+                        <div className="blog-card-category-row">
+                          <span className="blog-card-category-label">{article.category}</span>
+                        </div>
+
+                        <h3 className="blog-card-title">
+                          <Link to={`/blogs/${article.slug}`}>{article.title}</Link>
+                        </h3>
+
+                        <p className="blog-card-summary">{article.summary}</p>
+
+                        <div className="blog-card-footer">
+                          <Link className="blog-card-read-link" to={`/blogs/${article.slug}`}>
+                            <span>Read Practical Guide</span>
+                            <ArrowRight size={14} className="blog-card-arrow" />
+                          </Link>
+                        </div>
+                      </div>
+                    </article>
+                  )
+                })}
               </div>
+            ) : (
+              <motion.div
+                className="blog-no-results"
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4 }}
+              >
+                <div className="blog-no-results-icon">
+                  <Search size={40} />
+                </div>
+                <h3>No articles found</h3>
+                <p>Try adjusting your search terms or select <strong>"All"</strong> to browse everything.</p>
+                <button
+                  className="blog-cat-chip is-active"
+                  onClick={() => { setSearch(''); setCategory('All') }}
+                  type="button"
+                >
+                  Reset Filters
+                </button>
+              </motion.div>
             )}
           </div>
         </section>
@@ -2375,95 +3648,130 @@ function ContactForm({ compact = false }) {
       onSubmit={handleSubmit}
     >
       <div className="reference-form-header">
-        <span className="reference-eyebrow">{compact ? 'SEND US A MESSAGE' : 'GET A CONSULTATION'}</span>
-        <h3>{compact ? 'Send Us a Message' : 'Request a Strategic Consultation'}</h3>
+        <span className="reference-eyebrow contact-form-badge">
+          <Calendar size={13} /> {compact ? 'SEND US A MESSAGE' : 'GET A CONSULTATION'}
+        </span>
+        <h3>
+          {compact ? 'Send Us a Message' : (
+            <>Request a <span className="text-cyan-accent">Strategic</span> Consultation</>
+          )}
+        </h3>
         <p>{compact ? 'Tell us about your goals and we will be in touch.' : 'Tell us about your business goals and current digital presence.'}</p>
       </div>
 
       <div className="reference-form-fields">
         <div className="reference-form-field">
-          <label htmlFor={compact ? 'home-contact-name' : 'contact-name'}>{compact ? 'Full Name' : 'Your Full Name *'}</label>
-          <input
-            autoComplete="name"
-            id={compact ? 'home-contact-name' : 'contact-name'}
-            name="name"
-            onChange={handleChange}
-            placeholder="Enter your full name"
-            required
-            type="text"
-            value={formData.name}
-          />
+          <label htmlFor={compact ? 'home-contact-name' : 'contact-name'}>
+            <User size={14} className="field-icon-lbl" />
+            <span>{compact ? 'Full Name' : 'Your Full Name *'}</span>
+          </label>
+          <div className="field-input-icon-wrap">
+            <User size={16} className="input-inner-icon" />
+            <input
+              autoComplete="name"
+              id={compact ? 'home-contact-name' : 'contact-name'}
+              name="name"
+              onChange={handleChange}
+              placeholder="Enter your full name"
+              required
+              type="text"
+              value={formData.name}
+            />
+          </div>
         </div>
 
         <div className="reference-form-field">
-          <label htmlFor={compact ? 'home-contact-phone' : 'contact-phone'}>{compact ? 'Phone / WhatsApp' : 'Phone / WhatsApp Number *'}</label>
-          <input
-            autoComplete="tel"
-            id={compact ? 'home-contact-phone' : 'contact-phone'}
-            name="phone"
-            onChange={handleChange}
-            placeholder={compact ? 'Enter your number' : 'Enter your phone number'}
-            required
-            type="tel"
-            value={formData.phone}
-          />
+          <label htmlFor={compact ? 'home-contact-phone' : 'contact-phone'}>
+            <Phone size={14} className="field-icon-lbl" />
+            <span>{compact ? 'Phone / WhatsApp' : 'Phone / WhatsApp Number *'}</span>
+          </label>
+          <div className="field-input-icon-wrap">
+            <Phone size={16} className="input-inner-icon" />
+            <input
+              autoComplete="tel"
+              id={compact ? 'home-contact-phone' : 'contact-phone'}
+              name="phone"
+              onChange={handleChange}
+              placeholder={compact ? 'Enter your number' : 'Enter your phone number'}
+              required
+              type="tel"
+              value={formData.phone}
+            />
+          </div>
         </div>
 
         <div className="reference-form-field">
-          <label htmlFor={compact ? 'home-contact-email' : 'contact-email'}>{compact ? 'Email Address' : 'Email Address *'}</label>
-          <input
-            autoComplete="email"
-            id={compact ? 'home-contact-email' : 'contact-email'}
-            name="email"
-            onChange={handleChange}
-            placeholder={compact ? 'Enter your email' : 'name@business.com'}
-            required
-            type="email"
-            value={formData.email}
-          />
+          <label htmlFor={compact ? 'home-contact-email' : 'contact-email'}>
+            <Mail size={14} className="field-icon-lbl" />
+            <span>{compact ? 'Email Address' : 'Email Address *'}</span>
+          </label>
+          <div className="field-input-icon-wrap">
+            <Mail size={16} className="input-inner-icon" />
+            <input
+              autoComplete="email"
+              id={compact ? 'home-contact-email' : 'contact-email'}
+              name="email"
+              onChange={handleChange}
+              placeholder={compact ? 'Enter your email' : 'name@business.com'}
+              required
+              type="email"
+              value={formData.email}
+            />
+          </div>
         </div>
 
         {!compact && (
           <div className="reference-form-field">
-            <label htmlFor="contact-biz-type">Business Sector</label>
-            <select
-              id="contact-biz-type"
-              name="businessType"
-              onChange={handleChange}
-              required={!compact}
-              value={formData.businessType}
-            >
-              <option>Healthcare / Doctor / Clinic</option>
-              <option>Hospital</option>
-              <option>Dental Clinic</option>
-              <option>General Business</option>
-              <option>Local Business</option>
-              <option>Startup</option>
-              <option>Service Provider</option>
-              <option>Other</option>
-            </select>
+            <label htmlFor="contact-biz-type">
+              <Layers3 size={14} className="field-icon-lbl" />
+              <span>Business Sector</span>
+            </label>
+            <div className="field-input-icon-wrap">
+              <Layers3 size={16} className="input-inner-icon" />
+              <select
+                id="contact-biz-type"
+                name="businessType"
+                onChange={handleChange}
+                required={!compact}
+                value={formData.businessType}
+              >
+                <option>Healthcare / Doctor / Clinic</option>
+                <option>Hospital</option>
+                <option>Dental Clinic</option>
+                <option>General Business</option>
+                <option>Local Business</option>
+                <option>Startup</option>
+                <option>Service Provider</option>
+                <option>Other</option>
+              </select>
+            </div>
           </div>
         )}
 
-        <div className="reference-form-field">
+        <div className="reference-form-field reference-form-field-full">
           <label htmlFor={compact ? 'home-contact-service' : 'contact-service'}>
-            {compact ? 'Service Needed' : 'Primary Service Needed'}
+            <Settings size={14} className="field-icon-lbl" />
+            <span>{compact ? 'Service Needed' : 'Primary Service Needed'}</span>
           </label>
-          <select
-            id={compact ? 'home-contact-service' : 'contact-service'}
-            name="serviceNeeded"
-            onChange={handleChange}
-            required={!compact}
-            value={formData.serviceNeeded}
-          >
-            {compact && <option disabled value="">Select a Service</option>}
-            {contactServiceOptions.map((service) => <option key={service}>{service}</option>)}
-          </select>
+          <div className="field-input-icon-wrap">
+            <Settings size={16} className="input-inner-icon" />
+            <select
+              id={compact ? 'home-contact-service' : 'contact-service'}
+              name="serviceNeeded"
+              onChange={handleChange}
+              required={!compact}
+              value={formData.serviceNeeded}
+            >
+              {compact && <option disabled value="">Select a Service</option>}
+              {contactServiceOptions.map((service) => <option key={service}>{service}</option>)}
+            </select>
+          </div>
         </div>
 
         <div className="reference-form-field reference-form-field-full">
           <label htmlFor={compact ? 'home-contact-message' : 'contact-message'}>
-            {compact ? 'Your Message' : 'Project Details or Questions'}
+            <MessageSquare size={14} className="field-icon-lbl" />
+            <span>{compact ? 'Your Message' : 'Project Details or Questions'}</span>
           </label>
           <textarea
             id={compact ? 'home-contact-message' : 'contact-message'}
@@ -2471,14 +3779,16 @@ function ContactForm({ compact = false }) {
             onChange={handleChange}
             placeholder={compact ? 'Tell us about your requirement...' : 'Share details about your business location, current website, or ranking goals...'}
             required={!compact}
-            rows={4}
+            rows={2}
             value={formData.message}
           />
         </div>
       </div>
 
-      <button className="reference-button reference-button-primary reference-form-submit" disabled={isSubmitting} type="submit">
-        {isSubmitting ? 'Submitting Details…' : compact ? 'Send Enquiry' : 'Submit Project Inquiry'} <ArrowRight size={18} />
+      <button className="reference-button reference-button-primary reference-form-submit contact-submit-neon-btn" disabled={isSubmitting} type="submit">
+        <Send size={15} />
+        <span>{isSubmitting ? 'Submitting Details…' : compact ? 'Send Enquiry' : 'Submit Project Inquiry'}</span>
+        <ArrowRight size={16} />
       </button>
 
       {status.message && (
@@ -2498,118 +3808,209 @@ function ContactPage() {
         description={`Contact ASK GMB Solution in ${siteConfig.city} to discuss your digital growth, technology and website development goals.`}
         title="Contact ASK GMB Solution | Request a Consultation"
       />
-      <main className="reference-contact-page">
-        <section className="reference-contact-hero">
-          <div className="page-container reference-contact-hero-grid">
-            <div className="reference-contact-hero-copy">
-              <Breadcrumbs current="Contact Us" />
-              <span className="reference-eyebrow">GET IN TOUCH</span>
-              <h1>Let’s Talk About Your Business Growth</h1>
-              <p>Tell us about your goals and find the right digital growth and technology solutions.</p>
-            </div>
-            <img
-              alt="Modern business building representing ASK GMB Solution's technology services"
-              fetchPriority="high"
-              src={growthBuildingImage}
-            />
-          </div>
-        </section>
+      <main className="contact-page-exact-3d">
+        {/* Background glow wave ribbons */}
+        <div className="contact-exact-bg-glow" aria-hidden="true">
+          <img src={contactFuturisticBg} alt="" className="contact-bg-wave-img" />
+          <div className="contact-bg-orb contact-bg-orb-1" />
+          <div className="contact-bg-orb contact-bg-orb-2" />
+        </div>
 
-        <section className="reference-contact-details">
-          <div className="page-container reference-contact-layout">
-            <aside className="reference-contact-sidebar">
-              <section className="reference-contact-panel">
-                <span className="reference-eyebrow">GET IN TOUCH</span>
-                <h2>Get in Touch</h2>
-                <a className="reference-contact-method" href={`tel:${siteConfig.phone}`}>
-                  <span><Phone aria-hidden="true" size={22} /></span>
-                  <span><strong>Call Us</strong><small>Talk to our team.</small></span>
-                </a>
-                <a className="reference-contact-method" href={whatsappHref} rel="noopener noreferrer" target="_blank">
-                  <span><BrandWhatsApp size={22} /></span>
-                  <span><strong>WhatsApp</strong><small>Chat with us instantly.</small></span>
-                </a>
-                <a className="reference-contact-method" href={`mailto:${siteConfig.email}`}>
-                  <span><Mail aria-hidden="true" size={22} /></span>
-                  <span><strong>Email Us</strong><small>Write to us for enquiries.</small></span>
-                </a>
-                <a className="reference-contact-method" href={directionsUrl} rel="noopener noreferrer" target="_blank">
-                  <span><MapPin aria-hidden="true" size={22} /></span>
-                  <span><strong>Our Office</strong><small>{siteConfig.address}</small></span>
-                </a>
-                <div className="reference-contact-social">
-                  <span>Follow Our Official Channels</span>
-                  <SocialLinks />
+        <div className="page-container contact-exact-container">
+          {/* Breadcrumb */}
+          <nav className="contact-breadcrumb-exact" aria-label="Breadcrumb">
+            <Link to="/"><Home size={14} className="contact-home-icon" /> Home</Link>
+            <span className="contact-sep">›</span>
+            <span>Contact Us</span>
+          </nav>
+
+          {/* Top Hero Section */}
+          <div className="contact-hero-grid-exact">
+            {/* Left Copy */}
+            <div className="contact-hero-left-exact">
+              <div className="contact-pill-badge-exact">
+                <Send size={13} className="contact-pill-icon" />
+                <span>GET IN TOUCH</span>
+              </div>
+
+              <h1 className="contact-title-exact">
+                Let’s Grow Your Business
+                <span className="contact-title-highlight-wrap">
+                  <span className="contact-title-cyan-text">Together</span>
+                  <svg className="contact-title-cyan-swoosh" viewBox="0 0 140 22" fill="none" aria-hidden="true">
+                    <path d="M2 18C45 4 95 4 138 12" stroke="#20DFFF" strokeWidth="3.5" strokeLinecap="round" />
+                  </svg>
+                </span>
+              </h1>
+
+              <div className="contact-subtitle-exact-wrap">
+                <div className="contact-cyan-vertical-bar" aria-hidden="true" />
+                <p className="contact-subtitle-exact">
+                  Have a project in mind? Get in touch with our team to discuss your goals and find the right digital solution.
+                </p>
+              </div>
+
+              <div className="contact-features-row-exact">
+                <span className="contact-feature-pill">
+                  <CheckCircle2 size={16} className="contact-feature-check" />
+                  <span>Expert Guidance</span>
+                </span>
+                <span className="contact-feature-sep">|</span>
+                <span className="contact-feature-pill">
+                  <CheckCircle2 size={16} className="contact-feature-check" />
+                  <span>Quick Response</span>
+                </span>
+                <span className="contact-feature-sep">|</span>
+                <span className="contact-feature-pill">
+                  <CheckCircle2 size={16} className="contact-feature-check" />
+                  <span>Customized Solutions</span>
+                </span>
+              </div>
+            </div>
+
+            {/* Right 3D Laptop Visual */}
+            <div className="contact-hero-right-exact">
+              <div className="contact-hero-laptop-stage-glow" aria-hidden="true" />
+              <img
+                src={contactHeroLaptop}
+                alt="3D Digital Marketing Laptop with Google Business Profile & Analytics"
+                className="contact-hero-laptop-exact-img"
+                loading="eager"
+              />
+            </div>
+          </div>
+
+          {/* ── THE 6 CONTACT & SOCIAL MEDIA CARDS IN ONE SINGLE HORIZONTAL ROW ── */}
+          <div className="contact-7-cards-horizontal-row">
+            <a href={`tel:${siteConfig.phone}`} className="contact-7-card-pill" aria-label="Call Us">
+              <img src={contactCardCall} alt="Call Us" className="contact-7-card-pill-img" />
+            </a>
+            <a href={whatsappHref} className="contact-7-card-pill" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
+              <img src={contactCardWhatsapp} alt="WhatsApp" className="contact-7-card-pill-img" />
+            </a>
+            <a href={`mailto:${siteConfig.email}`} className="contact-7-card-pill" aria-label="Email Us">
+              <img src={contactCardEmail} alt="Email Us" className="contact-7-card-pill-img" />
+            </a>
+            <a href={siteConfig.instagram} className="contact-7-card-pill" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+              <img src={contactCardInstagram} alt="Instagram" className="contact-7-card-pill-img" />
+            </a>
+            <a href={siteConfig.facebook} className="contact-7-card-pill" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+              <img src={contactCardFacebook} alt="Facebook" className="contact-7-card-pill-img" />
+            </a>
+            <a href={siteConfig.linkedin} className="contact-7-card-pill" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn">
+              <img src={contactCardLinkedin} alt="LinkedIn" className="contact-7-card-pill-img" />
+            </a>
+          </div>
+
+          {/* ── BOTTOM LAYOUT — TWO LARGE SIDE-BY-SIDE SECTIONS ── */}
+          <div className="contact-bottom-two-panels-grid">
+            {/* LEFT: Consultation Form */}
+            <div className="contact-consultation-form-panel">
+              <div className="contact-form-particle-accent" aria-hidden="true" />
+              <ContactForm compact={false} />
+            </div>
+
+            {/* RIGHT: Our Location */}
+            <div className="contact-location-map-panel">
+              <div className="contact-map-header-exact">
+                <div className="contact-map-title-wrap">
+                  <span className="contact-map-circle-icon"><MapPin size={18} /></span>
+                  <h2>Our Location</h2>
                 </div>
-              </section>
-              <section className="reference-contact-map">
-                <h2><MapPin aria-hidden="true" size={22} /> Our Location</h2>
+                <a href={directionsUrl} className="contact-open-maps-btn-exact" rel="noopener noreferrer" target="_blank">
+                  Open in Maps <ArrowUpRight size={15} />
+                </a>
+              </div>
+
+              <div className="contact-map-embed-exact">
                 <iframe
                   loading="lazy"
                   referrerPolicy="no-referrer-when-downgrade"
                   src={mapEmbedUrl}
-                  title={`ASK GMB Solution office location map in ${siteConfig.neighborhood}, ${siteConfig.city}`}
+                  title={`ASK GMB Solution office location in ${siteConfig.city}`}
                 />
-                <a href={directionsUrl} rel="noopener noreferrer" target="_blank">
-                  Get Directions <ArrowUpRight aria-hidden="true" size={17} />
-                </a>
-              </section>
-            </aside>
-            <ContactForm />
+              </div>
+
+              <div className="contact-map-address-exact">
+                <span className="contact-map-circle-icon"><MapPin size={18} /></span>
+                <p>{siteConfig.address}</p>
+              </div>
+            </div>
           </div>
-        </section>
+        </div>
       </main>
     </>
   )
 }
 
-// 16. FOOTER REDESIGN (PREMIUM 4-COLUMN FOOTER)
+// 16. FOOTER REDESIGN (3D ULTRA-ATTRACTIVE ROYAL BLUE GLASSMORPHISM)
 function Footer({ showInlineSocials }) {
   return (
-    <footer className={`site-footer${showInlineSocials ? ' is-socials-in-footer' : ''}`}>
-      <div className="footer-glow" />
-      <div className="page-container footer-top-grid">
-        {/* Column 1: Logo & Agency Bio & Social */}
-        <div className="footer-col-brand">
+    <footer className={`site-footer footer-3d-royal-blue${showInlineSocials ? ' is-socials-in-footer' : ''}`}>
+      <div className="footer-3d-glow-top" />
+      <div className="page-container footer-3d-grid-wrap">
+        {/* Column 1: Brand Info */}
+        <div className="footer-3d-brand-col">
           <Link aria-label={`${siteConfig.companyName} home`} className="footer-logo-link" to="/">
             <img alt={siteConfig.companyName} className="footer-logo-img" loading="lazy" src={logo} />
           </Link>
-          <p className="footer-tagline">{siteConfig.tagline}</p>
-          <p className="footer-desc">
-            A digital marketing and website engineering agency in {siteConfig.city}.
-            We specialize in Google Business Profile management, Local SEO, and high-performance React & WordPress development.
+          <h2 className="footer-3d-brand-heading">Grow Your Business Online</h2>
+          <p className="footer-3d-brand-text">
+            A digital marketing and website engineering agency in {siteConfig.city}. We specialize in Google
+            Business Profile management, Local SEO, and high-performance React &amp; WordPress development.
           </p>
-          <div className="footer-social-box">
-            <span className="footer-social-heading">Follow Our Official Channels</span>
-            <SocialLinks />
+          <div className="footer-3d-channels-pill">
+            <span className="footer-channel-badge">
+              <Megaphone size={14} /> FOLLOW OUR OFFICIAL CHANNELS
+            </span>
+            <div className="footer-3d-social-row">
+              <a aria-label="Instagram" className="f-social-btn" href={siteConfig.instagram} rel="noopener noreferrer" target="_blank">
+                <BrandIcon name="instagram" />
+              </a>
+              <a aria-label="Facebook" className="f-social-btn" href={siteConfig.facebook} rel="noopener noreferrer" target="_blank">
+                <BrandIcon name="facebook" />
+              </a>
+              <a aria-label="LinkedIn" className="f-social-btn" href={siteConfig.linkedin} rel="noopener noreferrer" target="_blank">
+                <BrandIcon name="linkedin" />
+              </a>
+              <a aria-label="WhatsApp" className="f-social-btn" href={whatsappHref} rel="noopener noreferrer" target="_blank">
+                <BrandWhatsApp size={18} />
+              </a>
+            </div>
           </div>
         </div>
 
-        {/* Column 2: Quick Links */}
-        <div className="footer-col">
-          <h3 className="footer-heading">Quick Links</h3>
-          <ul className="footer-links-list">
-            <li><Link to="/">Home</Link></li>
-            <li><Link to="/about">About Us</Link></li>
-            <li><Link to="/services">All Services</Link></li>
-            <li><Link to="/industries-we-serve">Industries We Serve</Link></li>
-            <li><Link to="/our-process">Our Process</Link></li>
-            <li><Link to="/google-business-profile">Google Business Profile</Link></li>
-            <li><Link to="/website-design-development">Website Design & Development</Link></li>
-            <li><Link to="/mobile-app-development">Mobile App Development</Link></li>
-            <li><Link to="/blogs">Knowledge Hub & Blogs</Link></li>
-            <li><Link to="/contact">Contact Us</Link></li>
+        {/* Column 2: Quick Links Glass Card */}
+        <div className="footer-3d-glass-panel">
+          <div className="footer-panel-badge-title">
+            <span className="f-badge-icon"><Link2 size={16} /></span>
+            <h3>Quick Links</h3>
+          </div>
+          <ul className="footer-3d-links-list">
+            <li><Link to="/"><span>›</span> Home</Link></li>
+            <li><Link to="/about"><span>›</span> About Us</Link></li>
+            <li><Link to="/services"><span>›</span> All Services</Link></li>
+            <li><Link to="/industries-we-serve"><span>›</span> Industries We Serve</Link></li>
+            <li><Link to="/our-process"><span>›</span> Our Process</Link></li>
+            <li><Link to="/google-business-profile"><span>›</span> Google Business Profile</Link></li>
+            <li><Link to="/website-design-development"><span>›</span> Website Design &amp; Development</Link></li>
+            <li><Link to="/mobile-app-development"><span>›</span> Mobile App Development</Link></li>
+            <li><Link to="/blogs"><span>›</span> Knowledge Hub &amp; Blogs</Link></li>
+            <li><Link to="/contact"><span>›</span> Contact Us</Link></li>
           </ul>
         </div>
 
-        {/* Column 3: Our Services */}
-        <div className="footer-col">
-          <h3 className="footer-heading">Our Services</h3>
-          <ul className="footer-links-list">
+        {/* Column 3: Our Services Glass Card */}
+        <div className="footer-3d-glass-panel">
+          <div className="footer-panel-badge-title">
+            <span className="f-badge-icon"><Settings size={16} /></span>
+            <h3>Our Services</h3>
+          </div>
+          <ul className="footer-3d-links-list">
             {[...services.filter((service) => service.category === 'Digital Growth'), ...services.filter((service) => service.category === 'Technology Solutions')].map((service) => (
               <li key={service.path}>
                 <Link to={service.path}>
-                  {service.title}
+                  <span>›</span> {service.title}
                   {service.isCore && <span className="footer-core-dot" title="Core Specialty" />}
                 </Link>
               </li>
@@ -2617,38 +4018,41 @@ function Footer({ showInlineSocials }) {
           </ul>
         </div>
 
-        {/* Column 4: Contact Information */}
-        <div className="footer-col footer-contact-col">
-          <h3 className="footer-heading">Contact Information</h3>
-          <div className="footer-contact-details">
-            <a className="footer-contact-item" href={`tel:${siteConfig.phone}`}>
-              <span className="f-icon-bubble"><PhoneCall size={17} /></span>
-              <div>
-                <small>Direct Phone</small>
+        {/* Column 4: Contact Information Glass Card */}
+        <div className="footer-3d-glass-panel footer-contact-panel">
+          <div className="footer-panel-badge-title">
+            <span className="f-badge-icon"><PhoneCall size={16} /></span>
+            <h3>Contact Information</h3>
+          </div>
+          <div className="footer-3d-contact-list">
+            <a className="f-3d-contact-item" href={`tel:${siteConfig.phone}`}>
+              <span className="f-3d-icon-circle"><PhoneCall size={18} /></span>
+              <div className="f-3d-info-text">
+                <small>DIRECT PHONE</small>
                 <strong>{siteConfig.displayPhone}</strong>
               </div>
             </a>
 
-            <a className="footer-contact-item" href={`mailto:${siteConfig.email}`}>
-              <span className="f-icon-bubble"><Mail size={17} /></span>
-              <div>
-                <small>Official Email</small>
+            <a className="f-3d-contact-item" href={`mailto:${siteConfig.email}`}>
+              <span className="f-3d-icon-circle"><Mail size={18} /></span>
+              <div className="f-3d-info-text">
+                <small>OFFICIAL EMAIL</small>
                 <strong>{siteConfig.email}</strong>
               </div>
             </a>
 
-            <a className="footer-contact-item" href={whatsappHref} rel="noopener noreferrer" target="_blank">
-              <span className="f-icon-bubble f-whatsapp"><BrandWhatsApp size={18} /></span>
-              <div>
-                <small>WhatsApp Chat</small>
+            <a className="f-3d-contact-item" href={whatsappHref} rel="noopener noreferrer" target="_blank">
+              <span className="f-3d-icon-circle wa-circle"><BrandWhatsApp size={18} /></span>
+              <div className="f-3d-info-text">
+                <small>WHATSAPP CHAT</small>
                 <strong>Direct Message</strong>
               </div>
             </a>
 
-            <div className="footer-contact-item office-loc">
-              <span className="f-icon-bubble"><MapPin size={17} /></span>
-              <div>
-                <small>Office Headquarters</small>
+            <div className="f-3d-contact-item office-item">
+              <span className="f-3d-icon-circle"><MapPin size={18} /></span>
+              <div className="f-3d-info-text">
+                <small>OFFICE HEADQUARTERS</small>
                 <p>{siteConfig.address}</p>
               </div>
             </div>
@@ -2656,15 +4060,16 @@ function Footer({ showInlineSocials }) {
         </div>
       </div>
 
-      <div className="footer-bottom-bar">
+      {/* Decorative 3D elements left and right */}
+      <div className="footer-3d-bottom-wave-strip">
         <div className="page-container footer-bottom-inner">
           <p className="copyright-text">
             © {new Date().getFullYear()} {siteConfig.companyName}. All rights reserved.
           </p>
           <div className="legal-links">
-            <Link to="/privacy-policy">Privacy Policy</Link>
-            <span className="legal-sep">•</span>
-            <Link to="/terms-and-conditions">Terms & Conditions</Link>
+            <Link to="/privacy-policy"><ShieldCheck size={14} /> Privacy Policy</Link>
+            <span className="legal-sep">|</span>
+            <Link to="/terms-and-conditions"><FileText size={14} /> Terms &amp; Conditions</Link>
           </div>
         </div>
       </div>
@@ -2727,7 +4132,7 @@ function FloatingContactActions() {
         <button
           aria-expanded={isScheduleOpen}
           aria-label="Schedule a Call"
-          className="float-btn float-call-btn shadow-premium"
+          className="float-btn float-call-btn shadow-premium btn-tactile"
           onClick={() => setIsScheduleOpen((prev) => !prev)}
           title="Schedule a Call"
           type="button"
@@ -2740,7 +4145,7 @@ function FloatingContactActions() {
       {/* WhatsApp floating button (Official WhatsApp Green #25D366) */}
       <a
         aria-label="Chat With Us"
-        className="float-btn float-whatsapp-btn shadow-premium"
+        className="float-btn float-whatsapp-btn shadow-premium btn-tactile"
         href={whatsappHref}
         rel="noopener noreferrer"
         target="_blank"
@@ -2843,10 +4248,18 @@ function AppLayout() {
 
     const observer = new IntersectionObserver(([entry]) => {
       setIsFooterVisible(entry.isIntersecting)
-    })
+      if (entry.isIntersecting) {
+        document.body.classList.add('footer-active')
+      } else {
+        document.body.classList.remove('footer-active')
+      }
+    }, { threshold: 0.1 })
     observer.observe(footer)
 
-    return () => observer.disconnect()
+    return () => {
+      observer.disconnect()
+      document.body.classList.remove('footer-active')
+    }
   }, [])
 
   usePremiumMotion(location.pathname)
@@ -2856,29 +4269,41 @@ function AppLayout() {
 
   return (
     <div className="design-refresh">
+      <ScrollProgressBar />
       <Header key={location.pathname} />
-      <Routes>
-        <Route element={<HomePage />} path="/" />
-        <Route element={<AboutPage />} path="/about" />
-        <Route element={<ServicesPage />} path="/services" />
-        <Route element={<IndustriesPage />} path="/industries-we-serve" />
-        <Route element={<ProcessPage />} path="/our-process" />
-        <Route element={<Navigate replace to="/services" />} path="/digital-marketing" />
-        <Route element={<Navigate replace to="/services" />} path="/technologies" />
-        <Route element={<MobileAppPage />} path="/mobile-app-development" />
-        <Route element={<BlogPage />} path="/blogs" />
-        {services.filter((service) => service.path !== '/mobile-app-development').map((service) => (
-          <Route element={<ServiceDetailPage service={service} />} key={service.path} path={service.path} />
-        ))}
-        {services.flatMap((service) => (service.aliases || []).map((alias) => (
-          <Route element={<Navigate replace to={service.path} />} key={alias} path={alias} />
-        )))}
-        <Route element={article ? <BlogArticlePage article={article} /> : <NotFoundPage />} path="/blogs/:slug" />
-        <Route element={<ContactPage />} path="/contact" />
-        <Route element={<PolicyPage type="privacy" />} path="/privacy-policy" />
-        <Route element={<PolicyPage type="terms" />} path="/terms-and-conditions" />
-        <Route element={<NotFoundPage />} path="*" />
-      </Routes>
+      <AnimatePresence mode="wait">
+        <motion.div
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          initial={{ opacity: 0, y: 8 }}
+          key={location.pathname}
+          style={{ width: '100%', display: 'flex', flexDirection: 'column', flex: 1 }}
+          transition={{ duration: 0.28, ease: 'easeOut' }}
+        >
+          <Routes location={location} key={location.pathname}>
+            <Route element={<HomePage />} path="/" />
+            <Route element={<AboutPage />} path="/about" />
+            <Route element={<ServicesPage />} path="/services" />
+            <Route element={<IndustriesPage />} path="/industries-we-serve" />
+            <Route element={<ProcessPage />} path="/our-process" />
+            <Route element={<Navigate replace to="/services" />} path="/digital-marketing" />
+            <Route element={<Navigate replace to="/services" />} path="/technologies" />
+            <Route element={<MobileAppPage />} path="/mobile-app-development" />
+            <Route element={<BlogPage />} path="/blogs" />
+            {services.filter((service) => service.path !== '/mobile-app-development').map((service) => (
+              <Route element={<ServiceDetailPage service={service} />} key={service.path} path={service.path} />
+            ))}
+            {services.flatMap((service) => (service.aliases || []).map((alias) => (
+              <Route element={<Navigate replace to={service.path} />} key={alias} path={alias} />
+            )))}
+            <Route element={article ? <BlogArticlePage article={article} /> : <NotFoundPage />} path="/blogs/:slug" />
+            <Route element={<ContactPage />} path="/contact" />
+            <Route element={<PolicyPage type="privacy" />} path="/privacy-policy" />
+            <Route element={<PolicyPage type="terms" />} path="/terms-and-conditions" />
+            <Route element={<NotFoundPage />} path="*" />
+          </Routes>
+        </motion.div>
+      </AnimatePresence>
       <Footer showInlineSocials={isFooterVisible} />
       <FloatingContactActions />
     </div>

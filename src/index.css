@@ -127,3 +127,142 @@ main {
     transition-duration: 0.01ms !important;
   }
 }
+
+
+/* ==========================================================================
+   ENHANCED INTERACTIVE 3D & MOTION GRAPHICS
+   ========================================================================== */
+
+/* 3D Interactive Card Wrapper */
+.interactive-card-3d {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 14px;
+  will-change: transform;
+}
+
+.interactive-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+}
+
+.interactive-card-glare {
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  pointer-events: none;
+  z-index: 10;
+}
+
+/* Card Glow and Hover Elevation */
+.interactive-card-3d.is-card-hovered {
+  z-index: 5;
+}
+
+.interactive-card-3d.is-card-hovered .reference-service-card,
+.interactive-card-3d.is-card-hovered .reference-why-card,
+.interactive-card-3d.is-card-hovered .reference-process-card,
+.interactive-card-3d.is-card-hovered .reference-industry-focus-card {
+  box-shadow: 0 20px 48px -12px rgba(12, 105, 232, 0.2), 0 8px 24px -6px rgba(16, 43, 83, 0.08) !important;
+  border-color: rgba(12, 105, 232, 0.38) !important;
+}
+
+/* Rotating / pulsing icon on hover */
+.interactive-card-3d.is-card-hovered .reference-service-icon,
+.interactive-card-3d.is-card-hovered .reference-why-icon,
+.interactive-card-3d.is-card-hovered .reference-process-icon {
+  transform: rotate(8deg) scale(1.12);
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+  box-shadow: 0 8px 22px rgba(12, 105, 232, 0.28);
+}
+
+.reference-service-icon,
+.reference-why-icon,
+.reference-process-icon {
+  transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.35s ease;
+}
+
+/* Industries card image subtle zoom and arrow slide */
+.interactive-card-3d.is-card-hovered .reference-industry-focus-card img {
+  transform: scale(1.05);
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.reference-industry-focus-card img {
+  transition: transform 0.5s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.interactive-card-3d.is-card-hovered .reference-industry-focus-content .reference-button svg {
+  transform: translateX(5px);
+  transition: transform 0.25s ease;
+}
+
+/* Magnetic button tactile feel */
+.btn-tactile {
+  transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.2s ease !important;
+}
+
+.btn-tactile:hover {
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 10px 25px -4px rgba(12, 105, 232, 0.35) !important;
+}
+
+.btn-tactile:active {
+  transform: translateY(1px) scale(0.97) !important;
+}
+
+/* Focus glow rings for form inputs */
+.reference-form-field input:focus,
+.reference-form-field select:focus,
+.reference-form-field textarea:focus {
+  border-color: #0c69e8 !important;
+  box-shadow: 0 0 0 3.5px rgba(12, 105, 232, 0.2), 0 2px 8px rgba(12, 105, 232, 0.12) !important;
+  transform: translateY(-1px);
+  transition: all 0.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+  outline: none !important;
+}
+
+/* Animated FAQ Details */
+.faq-accordion-group details.faq-item {
+  transition: all 0.28s cubic-bezier(0.2, 0.8, 0.2, 1);
+  overflow: hidden;
+}
+
+.faq-accordion-group details.faq-item[open] {
+  border-color: rgba(12, 105, 232, 0.4);
+  box-shadow: 0 14px 34px -8px rgba(12, 105, 232, 0.15);
+}
+
+.faq-accordion-group details.faq-item summary {
+  transition: color 0.2s ease;
+}
+
+.faq-accordion-group details.faq-item[open] summary {
+  color: #0c69e8;
+}
+
+/* Timeline connecting pulse */
+.reference-process-cards {
+  position: relative;
+}
+
+.reference-process-cards::before {
+  content: '';
+  position: absolute;
+  top: 48px;
+  left: 5%;
+  right: 5%;
+  height: 2px;
+  background: linear-gradient(90deg, rgba(12, 105, 232, 0.15) 0%, rgba(12, 105, 232, 0.6) 50%, rgba(12, 105, 232, 0.15) 100%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+@media (max-width: 900px) {
+  .reference-process-cards::before {
+    display: none;
+  }
+}
